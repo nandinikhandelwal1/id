@@ -1,12 +1,12 @@
 {
-  "title": "2 BHK Residential Home for a Celebrity",
-  "subtitle": "Complete 3D model",
+  "title": "2 BHK Residential Home",
+  "subtitle": "College Project · Complete 3D Model",
   "category": "Residential Interior",
   "location": "Private location",
   "year": "2026",
-  "status": "Render files pending",
-  "confidential": true,
-  "summary": "A complete 3D model for a refined 2 BHK residential home designed for a celebrity. The client identity and exact location remain confidential; final render files will be added to the gallery.",
+  "status": "Academic project",
+  "confidential": false,
+  "summary": "A college-assigned 2 BHK residential interior project developed as a complete 3D model, exploring spatial planning, materials, lighting and a calm contemporary language.",
   "brief": "Create a calm, contemporary home that feels personal rather than showy, with comfortable social areas, well-planned private zones and seamless storage.",
   "concept": "Quiet luxury expressed through layered neutrals, natural textures, sculptural lighting and carefully controlled visual clutter.",
   "scope": [
@@ -15,7 +15,7 @@
     "Material and finish direction",
     "3D visualisation",
     "Technical drawings",
-    "Execution assistance"
+    "Presentation-ready 3D visualisation"
   ],
   "materials": [
     "Warm oak",
@@ -32,18 +32,6 @@
     {
       "label": "Master bedroom visual",
       "type": "render"
-    },
-    {
-      "label": "Material palette",
-      "type": "materials"
-    },
-    {
-      "label": "Furniture layout",
-      "type": "plan"
-    },
-    {
-      "label": "Site execution",
-      "type": "site"
     },
     {
       "label": "Detail study",
