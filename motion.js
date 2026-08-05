@@ -2,9 +2,9 @@ if (window.matchMedia('(max-width: 800px)').matches) {
   document.body.insertAdjacentHTML('beforeend', `<div class="mobile-dock"><a href="#top"><span>⌂</span>Home</a><a href="#about"><span>◌</span>About</a><a href="#project"><span>✦</span>Work</a><a href="#contact"><span>↗</span>Contact</a></div>`);
 }
 const socialIcons = {
-  Instagram: '<img src="https://cdn.simpleicons.org/instagram/1f292b" alt="" aria-hidden="true">',
-  LinkedIn: '<img src="https://cdn.simpleicons.org/linkedin/1f292b" alt="" aria-hidden="true">',
-  WhatsApp: '<img src="https://cdn.simpleicons.org/whatsapp/1f292b" alt="" aria-hidden="true">'
+  Instagram: '<img src="https://api.iconify.design/simple-icons:instagram.svg?color=%231f292b" alt="" aria-hidden="true">',
+  LinkedIn: '<img src="https://api.iconify.design/simple-icons:linkedin.svg?color=%231f292b" alt="" aria-hidden="true">',
+  WhatsApp: '<img src="https://api.iconify.design/simple-icons:whatsapp.svg?color=%231f292b" alt="" aria-hidden="true">'
 };
 document.querySelectorAll('footer span').forEach((item) => {
   if (item.textContent.includes('New Delhi / India')) item.textContent = 'Noida / India';
