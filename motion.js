@@ -1,3 +1,6 @@
+if (window.matchMedia('(max-width: 800px)').matches) {
+  document.body.insertAdjacentHTML('beforeend', `<div class="mobile-dock"><a href="#top"><span>⌂</span>Home</a><a href="#about"><span>◌</span>About</a><a href="#project"><span>✦</span>Work</a><a href="#contact"><span>↗</span>Contact</a></div>`);
+}
 const revealItems = document.querySelectorAll('section, .drawing-card, .process-grid > div, .contact-link');
 revealItems.forEach((item, index) => {
   item.classList.add('reveal');
