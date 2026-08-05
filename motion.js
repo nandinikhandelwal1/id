@@ -9,6 +9,10 @@ const socialIcons = {
 document.querySelectorAll('footer span').forEach((item) => {
   if (item.textContent.includes('New Delhi / India')) item.textContent = 'Noida / India';
 });
+const drawingGrid = document.querySelector('.drawing-grid');
+if (drawingGrid && !drawingGrid.querySelector('[data-living-two]')) {
+  drawingGrid.insertAdjacentHTML('beforeend', '<a class="drawing-card" data-living-two href="assets/drawings/LIVING%202%20FINAL.pdf" target="_blank"><img src="assets/drawings/LIVING%202%20FINAL-1.jpg" alt="Living room elevation II"><span>Living elevation II <b>↗</b></span></a>');
+}
 document.querySelectorAll('.social-links a').forEach((link) => {
   const name = link.textContent.trim().split(' ')[0];
   if (socialIcons[name]) link.innerHTML = `${socialIcons[name]}<span>${name}</span><b>↗</b>`;
