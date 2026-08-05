@@ -6,6 +6,9 @@ const socialIcons = {
   LinkedIn: '<img src="https://cdn.simpleicons.org/linkedin/1f292b" alt="" aria-hidden="true">',
   WhatsApp: '<img src="https://cdn.simpleicons.org/whatsapp/1f292b" alt="" aria-hidden="true">'
 };
+document.querySelectorAll('footer span').forEach((item) => {
+  if (item.textContent.includes('New Delhi / India')) item.textContent = 'Noida / India';
+});
 document.querySelectorAll('.social-links a').forEach((link) => {
   const name = link.textContent.trim().split(' ')[0];
   if (socialIcons[name]) link.innerHTML = `${socialIcons[name]}<span>${name}</span><b>↗</b>`;
