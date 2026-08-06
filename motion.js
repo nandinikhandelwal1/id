@@ -17,6 +17,9 @@ document.querySelectorAll('.social-links a').forEach((link) => {
   const name = link.textContent.trim().split(' ')[0];
   if (socialIcons[name]) link.innerHTML = `${socialIcons[name]}<span>${name}</span><b>↗</b>`;
 });
+document.querySelectorAll('b').forEach((arrow) => {
+  if (arrow.textContent.includes('↗')) arrow.innerHTML = '<svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M9 5h10v10"></path></svg>';
+});
 const revealItems = document.querySelectorAll('section, .drawing-card, .process-grid > div, .contact-link');
 revealItems.forEach((item, index) => {
   item.classList.add('reveal');
