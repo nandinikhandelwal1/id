@@ -42,7 +42,6 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
 @media(max-width:800px){.drawings{padding:6rem 8vw 8rem}.drawings-head{margin-top:3rem;margin-bottom:3rem}}
 .room-panel>img{object-fit:contain;padding:clamp(1rem,2.5vw,2.25rem);box-sizing:border-box;background:#e8e1d7}
 .room-panel>img[src*="BEDROOM"]{object-fit:contain;object-position:center;max-width:100%;}
-.drawing-crops{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.35rem,1vw,.8rem);height:100%;min-height:430px;padding:clamp(1rem,2vw,1.5rem);box-sizing:border-box;align-items:center}.drawing-crops img{width:100%;height:auto;max-height:100%;object-fit:contain;background:#f4efe7}.drawing-crops img:hover{transform:scale(1.035);z-index:1}
 .pdf-open-button{opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .3s ease,transform .3s ease}.room-panel:hover .pdf-open-button,.room-panel:focus-within .pdf-open-button{opacity:1;transform:translateY(0);pointer-events:auto}
 @media(hover:none){.pdf-open-button{opacity:1;transform:none;pointer-events:auto}}
 @media(max-width:480px){.room-panel>img{padding:.75rem}}
