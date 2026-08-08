@@ -30,7 +30,7 @@ if (zoomableDrawings.length) {
       </div>
       <div class="drawing-lightbox__stage" tabindex="0">
         <img class="drawing-lightbox__image" alt="">
-        <span class="drawing-lightbox__hint">Scroll to zoom · drag to pan · double-click to zoom</span>
+    <span class="drawing-lightbox__hint">Use +/- to zoom · drag to pan · double-click to zoom</span>
       </div>
     </div>`;
   document.body.append(lightbox);
@@ -94,10 +94,6 @@ if (zoomableDrawings.length) {
   lightbox.querySelector('[data-zoom-in]').addEventListener('click', () => adjustZoom(.5));
   lightbox.querySelector('[data-zoom-out]').addEventListener('click', () => adjustZoom(-.5));
   lightbox.querySelector('[data-zoom-reset]').addEventListener('click', reset);
-  stage.addEventListener('wheel', (event) => {
-    event.preventDefault();
-    adjustZoom(event.deltaY > 0 ? -.25 : .25);
-  }, { passive: false });
   stage.addEventListener('pointerdown', (event) => {
     dragging = true;
     startX = event.clientX;
