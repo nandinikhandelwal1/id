@@ -80,6 +80,11 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
 .room-accordion-icon::before,.room-accordion-icon::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:1px;background:currentColor;transform:translate(-50%,-50%);transition:transform .25s ease}
 .room-accordion-icon::after{transform:translate(-50%,-50%) rotate(90deg)}
 .room-row.is-collapsed .room-accordion-icon::after{transform:translate(-50%,-50%) rotate(0)}
+.room-label{cursor:pointer}
+.room-label:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+.room-accordion-toggle:hover{background:transparent;color:var(--ink);transform:translateY(-2px)}
+.room-accordion-icon::after{transform:translate(-50%,-50%) rotate(0)}
+.room-row.is-collapsed .room-accordion-icon::after{transform:translate(-50%,-50%) rotate(90deg)}
 @media(max-width:800px){.room-label{display:flex;align-items:center}.room-label p{margin-left:auto}.room-content{grid-template-columns:1fr 1fr;gap:12px}}
 @media(max-width:480px){.room-label{display:flex}.room-content{grid-template-columns:1fr}}
 :root{--ink:#1f292b;--accent:#b88b5c;--warm:#e4ddd1;--paper:#f6f2eb}

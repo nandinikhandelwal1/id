@@ -26,6 +26,13 @@
     </section>
     <a class="back-link" href="index.html#work">← Back to selected work</a>
   </main>
-  <script>document.querySelector('.menu-button').addEventListener('click',()=>document.querySelector('.nav').classList.toggle('open'));</script>
+<script>
+  document.querySelector('.menu-button').addEventListener('click',()=>document.querySelector('.nav').classList.toggle('open'));
+  document.querySelectorAll('model-viewer').forEach((viewer) => {
+    viewer.addEventListener('wheel', (event) => {
+      if (!event.ctrlKey) event.stopImmediatePropagation();
+    }, { capture: true, passive: true });
+  });
+</script>
 </body>
 </html>

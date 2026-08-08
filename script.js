@@ -125,6 +125,7 @@ if (zoomableDrawings.length) {
   lightbox.querySelector('[data-zoom-reset]').addEventListener('click', reset);
   image.addEventListener('load', fitToStage);
   stage.addEventListener('wheel', (event) => {
+    if (!event.ctrlKey) return;
     event.preventDefault();
     adjustZoom(event.deltaY > 0 ? -.25 : .25);
   }, { passive: false });

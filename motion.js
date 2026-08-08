@@ -53,10 +53,37 @@ document.querySelectorAll('.room-row').forEach((row, index) => {
   toggle.innerHTML = '<span class="room-accordion-icon" aria-hidden="true"></span>';
   label.appendChild(toggle);
 
-  toggle.addEventListener('click', () => {
+  const toggleSection = () => {
     const collapsed = row.classList.toggle('is-collapsed');
-    toggle.setAttribute('aria-expanded', String(!collapsed));
+    const expanded = String(!collapsed);
+    toggle.setAttribute('aria-expanded', expanded);
+    label.setAttribute('aria-expanded', expanded);
+  };
+
+  label.setAttribute('role', 'button');
+  label.setAttribute('tabindex', '0');
+  label.setAttribute('aria-controls', content.id);
+  label.setAttribute('aria-expanded', 'true');
+  label.addEventListener('click', (event) => {
+    if (event.target.closest('a, button, model-viewer')) return;
+    toggleSection();
   });
+  label.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggleSection();
+    }
+  });
+  toggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    toggleSection();
+  });
+});
+
+document.querySelectorAll('model-viewer').forEach((viewer) => {
+  viewer.addEventListener('wheel', (event) => {
+    if (!event.ctrlKey) event.stopImmediatePropagation();
+  }, { capture: true, passive: true });
 });
 if (drawingGrid && !drawingGrid.querySelector('[data-living-two]')) {
   drawingGrid.insertAdjacentHTML('beforeend', '<a class="drawing-card" data-living-two href="assets/drawings/LIVING%202%20FINAL.pdf" target="_blank"><img src="assets/drawings/LIVING%202%20FINAL-1.jpg" alt="Living room elevation II"><span>Living elevation II <b>↗</b></span></a>');
