@@ -95,6 +95,15 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
 .portfolio-download{display:inline-flex;margin-top:2rem;align-items:center;gap:1rem}
 .portfolio-download:hover{transform:translateY(-3px);background:var(--ink);color:var(--paper)}
 @media(max-width:760px){.moodboard-inner{grid-template-columns:1fr;gap:40px}.moodboard{padding:90px 20px}.moodboard-placeholder{min-height:300px;padding:30px}.portfolio-download{width:100%;justify-content:space-between}}
+
+.moodboard-intro{max-width:34rem;margin:clamp(28px,4vw,56px) 0 0;color:var(--ink);font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.65}
+.moodboard-art{margin:0;padding:clamp(10px,1.1vw,18px);background:#f5f0e8;border:1px solid rgba(32,35,34,.14);box-shadow:0 20px 60px rgba(32,35,34,.09)}
+.moodboard-art a{display:block;overflow:hidden;background:#eee8dd}
+.moodboard-art img{display:block;width:100%;height:auto;max-height:min(78vh,900px);object-fit:contain;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.moodboard-art a:hover img{transform:scale(1.015)}
+.moodboard-art figcaption{display:flex;justify-content:space-between;gap:18px;padding:14px 4px 2px;color:var(--ink);font:600 .68rem/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.moodboard-art figcaption span:last-child{color:var(--accent)}
+@media(max-width:760px){.moodboard-intro{margin-top:24px}.moodboard-art{padding:8px}.moodboard-art img{max-height:none}.moodboard-art figcaption{font-size:.58rem;flex-direction:column;gap:5px}}
 .room-panel{overflow:hidden}.room-panel>img{display:block;width:100%;height:100%;min-height:inherit;padding:0;box-sizing:border-box;object-fit:cover;object-position:center}
 
 /* Compact room studies */
@@ -112,3 +121,11 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
   .room-row{padding:1.75rem 0}
   .room-panel,.room-model-link{height:270px}
 }
+
+.contact-link b::after{
+      content:none !important;
+      display:none !important;
+}
+.contact-link b::before{content:none !important;display:none !important}
+.contact-link b svg{display:block;width:17px;height:17px}
+.drawing-lightbox__stage{overscroll-behavior:contain;user-select:none;-webkit-user-select:none}

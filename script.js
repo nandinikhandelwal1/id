@@ -47,7 +47,7 @@ if (zoomableDrawings.length) {
       </div>
       <div class="drawing-lightbox__stage" tabindex="0">
         <img class="drawing-lightbox__image" alt="">
-    <span class="drawing-lightbox__hint">Use +/- to zoom · drag to pan · double-click to zoom</span>
+      <span class="drawing-lightbox__hint">Pinch or +/- to zoom · drag to pan · double-click to zoom</span>
       </div>
     </div>`;
   document.body.append(lightbox);
@@ -60,10 +60,9 @@ if (zoomableDrawings.length) {
   let offsetX = 0;
   let offsetY = 0;
   let dragging = false;
-  let startX = 0;
-  let startY = 0;
-  let originX = 0;
-  let originY = 0;
+  let dragStart = null;
+  const activePointers = new Map();
+  let pinchStart = null;
 
   const render = () => {
     image.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(${scale})`;
@@ -102,11 +101,11 @@ if (zoomableDrawings.length) {
     title.textContent = getTitle(drawing);
     image.src = drawing.currentSrc || drawing.src;
     image.alt = drawing.alt || 'AutoCAD drawing';
-    if (image.complete) fitToStage();
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.classList.add('drawing-lightbox-open');
-    stage.focus();
+    stage.focus({ preventScroll: true });
+    if (image.complete) requestAnimationFrame(fitToStage);
   };
   const close = () => {
     lightbox.classList.remove('is-open');
@@ -129,29 +128,88 @@ if (zoomableDrawings.length) {
     event.preventDefault();
     adjustZoom(event.deltaY > 0 ? -.25 : .25);
   }, { passive: false });
+  const clampScale = (value) => Math.min(5, Math.max(minScale, value));
+  const distanceBetweenPointers = () => {
+    const points = [...activePointers.values()];
+    if (points.length < 2) return 0;
+    return Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+  };
+  const midpointBetweenPointers = () => {
+    const points = [...activePointers.values()];
+    if (points.length < 2) return { x: 0, y: 0 };
+    return {
+      x: (points[0].x + points[1].x) / 2,
+      y: (points[0].y + points[1].y) / 2
+    };
+  };
+
   stage.addEventListener('pointerdown', (event) => {
-    if (event.button !== 0) return;
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    event.preventDefault();
+    activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    try { stage.setPointerCapture(event.pointerId); } catch {}
+    if (activePointers.size >= 2) {
+      dragging = false;
+      dragStart = null;
+      const midpoint = midpointBetweenPointers();
+      pinchStart = {
+        distance: distanceBetweenPointers(),
+        scale,
+        midpoint,
+        offsetX,
+        offsetY
+      };
+      stage.classList.remove('is-dragging');
+      return;
+    }
     dragging = true;
-    startX = event.clientX;
-    startY = event.clientY;
-    originX = offsetX;
-    originY = offsetY;
+    dragStart = { x: event.clientX, y: event.clientY, offsetX, offsetY };
+    pinchStart = null;
     stage.classList.add('is-dragging');
-    stage.setPointerCapture(event.pointerId);
   });
   stage.addEventListener('pointermove', (event) => {
-    if (!dragging) return;
-    offsetX = originX + event.clientX - startX;
-    offsetY = originY + event.clientY - startY;
+    if (!activePointers.has(event.pointerId)) return;
+    activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (activePointers.size >= 2 && pinchStart) {
+      const currentDistance = distanceBetweenPointers();
+      const midpoint = midpointBetweenPointers();
+      scale = clampScale(pinchStart.scale * currentDistance / pinchStart.distance);
+      offsetX = pinchStart.offsetX + midpoint.x - pinchStart.midpoint.x;
+      offsetY = pinchStart.offsetY + midpoint.y - pinchStart.midpoint.y;
+      if (scale === minScale) {
+        offsetX = 0;
+        offsetY = 0;
+      }
+      event.preventDefault();
+      render();
+      return;
+    }
+    if (!dragging || !dragStart) return;
+    event.preventDefault();
+    offsetX = dragStart.offsetX + event.clientX - dragStart.x;
+    offsetY = dragStart.offsetY + event.clientY - dragStart.y;
     render();
   });
   const stopDragging = (event) => {
+    activePointers.delete(event?.pointerId);
+    if (activePointers.size >= 2) return;
+    if (activePointers.size === 1) {
+      const remaining = [...activePointers.values()][0];
+      pinchStart = null;
+      dragging = true;
+      dragStart = { x: remaining.x, y: remaining.y, offsetX, offsetY };
+      stage.classList.add('is-dragging');
+      return;
+    }
+    pinchStart = null;
+    dragStart = null;
     dragging = false;
     stage.classList.remove('is-dragging');
-    if (event?.pointerId !== undefined && stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
   };
   stage.addEventListener('pointerup', stopDragging);
   stage.addEventListener('pointercancel', stopDragging);
+  stage.addEventListener('lostpointercapture', stopDragging);
+  stage.addEventListener('contextmenu', (event) => event.preventDefault());
   stage.addEventListener('dblclick', () => {
     if (scale === minScale) adjustZoom(1.25);
     else reset();

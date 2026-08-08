@@ -21,7 +21,7 @@ if (!document.querySelector('script[data-model-viewer]')) {
   modelViewerScript.dataset.modelViewer = 'true';
   document.head.appendChild(modelViewerScript);
 }
-const modelPanel = (room) => `<div class="room-model-link"><model-viewer src="assets/final-model-web.glb" camera-controls disable-zoom touch-action="pan-y" interaction-prompt="none" shadow-intensity="0.7" exposure="1.15" camera-orbit="35deg 65deg 10m" field-of-view="28deg" alt="Interactive full 3D model — ${room}"></model-viewer><a class="model-open-label" href="project.html?room=${encodeURIComponent(room)}" target="_blank" rel="noopener" aria-label="Open the full 3D model for ${room}">Open full 3D model ↗</a></div>`;
+const modelPanel = (room) => `<div class="room-model-link"><model-viewer src="assets/final-model-web.glb" camera-controls touch-action="none" interaction-prompt="none" shadow-intensity="0.7" exposure="1.15" camera-orbit="35deg 65deg 10m" field-of-view="28deg" alt="Interactive full 3D model — ${room}"></model-viewer><a class="model-open-label" href="project.html?room=${encodeURIComponent(room)}" target="_blank" rel="noopener" aria-label="Open the full 3D model for ${room}">Open full 3D model ↗</a></div>`;
 document.querySelectorAll('.room-panel.room-empty').forEach((panel) => {
   const room = panel.closest('.room-row')?.querySelector('.room-label h3')?.textContent.trim() || 'room';
   panel.outerHTML = `<figure class="room-panel room-model-panel">${modelPanel(room)}<figcaption>Interactive 3D model</figcaption></figure>`;
@@ -66,7 +66,10 @@ document.querySelectorAll('.social-links a').forEach((link) => {
   if (socialIcons[name]) link.innerHTML = `${socialIcons[name]}<span>${name}</span><b>↗</b>`;
 });
 document.querySelectorAll('b').forEach((arrow) => {
-  if (arrow.textContent.includes('↗')) arrow.innerHTML = '<svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M9 5h10v10"></path></svg>';
+      if (arrow.textContent.includes('↗') || arrow.closest('.contact-link')) {
+        arrow.replaceChildren();
+        arrow.insertAdjacentHTML('beforeend', '<svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M9 5h10v10"></path></svg>');
+      }
 });
 const revealItems = document.querySelectorAll('section, .drawing-card, .process-grid > div, .contact-link, .skill-list span');
 revealItems.forEach((item, index) => {
