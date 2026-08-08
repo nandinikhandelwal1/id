@@ -28,6 +28,11 @@ document.querySelectorAll('.room-panel.room-empty').forEach((panel) => {
 });
 const bedroomPanel = document.querySelector('.room-row:last-child .room-panel:last-child');
 if (bedroomPanel) bedroomPanel.outerHTML = `<figure class="room-panel room-model-panel">${modelPanel('Bedroom')}<figcaption>Interactive 3D model</figcaption></figure>`;
+const pdfDrawings = ['assets/drawings/Final%20layout%20Flooring..-Model.pdf','assets/drawings/LIVING%201%20FINAL.pdf','assets/drawings/LIVING%202%20FINAL.pdf','assets/drawings/KITCHEN%20ELEVATION%20FINAL.pdf','assets/drawings/BEDROOM%20ELEVATION.pdf'];
+document.querySelectorAll('.room-row').forEach((row, index) => {
+  const panel = row.querySelector('.room-panel');
+  if (panel && pdfDrawings[index]) panel.insertAdjacentHTML('beforeend', `<a class="pdf-open-button" href="${pdfDrawings[index]}" target="_blank" rel="noopener">Open PDF drawing <span>↗</span></a>`);
+});
 if (drawingGrid && !drawingGrid.querySelector('[data-living-two]')) {
   drawingGrid.insertAdjacentHTML('beforeend', '<a class="drawing-card" data-living-two href="assets/drawings/LIVING%202%20FINAL.pdf" target="_blank"><img src="assets/drawings/LIVING%202%20FINAL-1.jpg" alt="Living room elevation II"><span>Living elevation II <b>↗</b></span></a>');
 }
