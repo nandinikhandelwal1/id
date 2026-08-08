@@ -10,8 +10,17 @@ const progress = document.querySelector('#progress');
 const portrait = document.querySelector('.portrait-frame img');
 if (portrait) portrait.src = 'assets/nandini-portrait.jpg';
 const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('visible'); }), { threshold: .12 });
-reveals.forEach((item) => observer.observe(item));
+const observer = 'IntersectionObserver' in window
+  ? new IntersectionObserver((entries, instance) => entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        instance.unobserve(entry.target);
+      }
+    }), { rootMargin: '0px 0px 150% 0px', threshold: 0 })
+  : null;
+if (observer) reveals.forEach((item) => observer.observe(item));
+else reveals.forEach((item) => item.classList.add('is-visible'));
+window.setTimeout(() => reveals.forEach((item) => item.classList.add('is-visible')), 500);
 window.addEventListener('scroll', () => { const max = document.documentElement.scrollHeight - innerHeight; progress.style.width = `${(scrollY / max) * 100}%`; });
 document.querySelector('.menu-button').addEventListener('click', () => document.querySelector('.nav').classList.toggle('open'));
 document.querySelectorAll('.nav a').forEach((link) => link.addEventListener('click', () => document.querySelector('.nav').classList.remove('open')));
