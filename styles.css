@@ -123,9 +123,52 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
 }
 
 .contact-link b::after{
-      content:none !important;
-      display:none !important;
-}
+        content:none !important;
+        display:none !important;
+    }
 .contact-link b::before{content:none !important;display:none !important}
 .contact-link b svg{display:block;width:17px;height:17px}
 .drawing-lightbox__stage{overscroll-behavior:contain;user-select:none;-webkit-user-select:none}
+
+.contact-link b{
+  display:inline-flex !important;
+  width:1.15rem;
+  height:1.15rem;
+  align-items:center;
+  justify-content:center;
+  color:#1f292b !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:translate(0,0);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),color .2s ease;
+}
+.contact-link b::before{
+  content:'↗' !important;
+  display:block !important;
+  color:#1f292b !important;
+  font-size:17px;
+  line-height:1;
+  opacity:1 !important;
+  visibility:visible !important;
+}
+.contact-link b::after{content:none !important;display:none !important}
+.contact-link:hover b,
+.contact-link:focus-visible b{
+  color:#1f292b !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:translate(4px,-4px);
+}
+.contact-link:hover b::before,
+.contact-link:focus-visible b::before{
+  color:#1f292b !important;
+  opacity:1 !important;
+  visibility:visible !important;
+}
+.social-links a b,
+.social-links a:hover b,
+.social-links a:focus-visible b{
+  color:#1f292b !important;
+  opacity:1 !important;
+  visibility:visible !important;
+}
