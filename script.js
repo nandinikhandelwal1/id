@@ -1,3 +1,11 @@
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+const navigationEntry = performance.getEntriesByType('navigation')[0];
+if (navigationEntry?.type === 'reload') {
+  window.addEventListener('pageshow', () => {
+    window.setTimeout(() => window.scrollTo(0, 0), 0);
+  }, { once: true });
+}
+
 const progress = document.querySelector('#progress');
 const portrait = document.querySelector('.portrait-frame img');
 if (portrait) portrait.src = 'assets/nandini-portrait.jpg';
