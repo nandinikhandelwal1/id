@@ -33,6 +33,15 @@ document.querySelectorAll('.room-row').forEach((row, index) => {
   const panel = row.querySelector('.room-panel');
   if (panel && pdfDrawings[index]) panel.insertAdjacentHTML('beforeend', `<a class="pdf-open-button" href="${pdfDrawings[index]}" target="_blank" rel="noopener">Open PDF drawing <span>↗</span></a>`);
 });
+const croppedRooms = {3: 'kitchen', 4: 'bedroom'};
+document.querySelectorAll('.room-row').forEach((row, index) => {
+  const cropName = croppedRooms[index];
+  const panel = row.querySelector('.room-panel');
+  if (!cropName || !panel) return;
+  const crops = [1, 2, 3].map((part) => `<img src="assets/drawings/crops/${cropName}-${part}.jpg" alt="${cropName} elevation ${part}">`).join('');
+  panel.insertAdjacentHTML('afterbegin', `<div class="drawing-crops">${crops}</div>`);
+  panel.querySelector(':scope > img')?.remove();
+});
 if (drawingGrid && !drawingGrid.querySelector('[data-living-two]')) {
   drawingGrid.insertAdjacentHTML('beforeend', '<a class="drawing-card" data-living-two href="assets/drawings/LIVING%202%20FINAL.pdf" target="_blank"><img src="assets/drawings/LIVING%202%20FINAL-1.jpg" alt="Living room elevation II"><span>Living elevation II <b>↗</b></span></a>');
 }
