@@ -21,7 +21,7 @@ if (!document.querySelector('script[data-model-viewer]')) {
   modelViewerScript.dataset.modelViewer = 'true';
   document.head.appendChild(modelViewerScript);
 }
-const modelPanel = (room) => `<a class="room-model-link" href="project.html?room=${encodeURIComponent(room)}" target="_blank" rel="noopener" aria-label="Open the full 3D model for ${room}"><model-viewer src="assets/final-model-web.glb" camera-controls touch-action="pan-y" interaction-prompt="none" shadow-intensity="0.7" exposure="1.15" camera-orbit="35deg 65deg 18m" field-of-view="28deg" alt="Interactive full 3D model — ${room}"></model-viewer><span class="model-open-label">Open full 3D model ↗</span></a>`;
+const modelPanel = (room) => `<div class="room-model-link"><model-viewer src="assets/final-model-web.glb" camera-controls touch-action="pan-y" interaction-prompt="none" shadow-intensity="0.7" exposure="1.15" camera-orbit="35deg 65deg 18m" field-of-view="28deg" alt="Interactive full 3D model — ${room}"></model-viewer><a class="model-open-label" href="project.html?room=${encodeURIComponent(room)}" target="_blank" rel="noopener" aria-label="Open the full 3D model for ${room}">Open full 3D model ↗</a></div>`;
 document.querySelectorAll('.room-panel.room-empty').forEach((panel) => {
   const room = panel.closest('.room-row')?.querySelector('.room-label h3')?.textContent.trim() || 'room';
   panel.outerHTML = `<figure class="room-panel room-model-panel">${modelPanel(room)}<figcaption>Interactive 3D model</figcaption></figure>`;
