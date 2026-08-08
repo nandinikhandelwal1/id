@@ -33,6 +33,31 @@ document.querySelectorAll('.room-row').forEach((row, index) => {
   const panel = row.querySelector('.room-panel');
   if (panel && pdfDrawings[index]) panel.insertAdjacentHTML('beforeend', `<a class="pdf-open-button" href="${pdfDrawings[index]}" target="_blank" rel="noopener">Open PDF drawing <span>↗</span></a>`);
 });
+document.querySelectorAll('.room-row').forEach((row, index) => {
+  const label = row.querySelector('.room-label');
+  const panels = Array.from(row.children).filter((child) => child.classList.contains('room-panel'));
+  if (!label || !panels.length || row.querySelector('.room-content')) return;
+
+  const content = document.createElement('div');
+  content.className = 'room-content';
+  content.id = `room-content-${index + 1}`;
+  panels.forEach((panel) => content.appendChild(panel));
+  row.appendChild(content);
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'room-accordion-toggle';
+  toggle.setAttribute('aria-expanded', 'true');
+  toggle.setAttribute('aria-controls', content.id);
+  toggle.setAttribute('aria-label', `Toggle ${label.querySelector('h3')?.textContent.trim() || 'section'}`);
+  toggle.innerHTML = '<span class="room-accordion-icon" aria-hidden="true"></span>';
+  label.appendChild(toggle);
+
+  toggle.addEventListener('click', () => {
+    const collapsed = row.classList.toggle('is-collapsed');
+    toggle.setAttribute('aria-expanded', String(!collapsed));
+  });
+});
 if (drawingGrid && !drawingGrid.querySelector('[data-living-two]')) {
   drawingGrid.insertAdjacentHTML('beforeend', '<a class="drawing-card" data-living-two href="assets/drawings/LIVING%202%20FINAL.pdf" target="_blank"><img src="assets/drawings/LIVING%202%20FINAL-1.jpg" alt="Living room elevation II"><span>Living elevation II <b>↗</b></span></a>');
 }
