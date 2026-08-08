@@ -43,5 +43,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
 .room-panel>img{object-fit:contain;padding:clamp(1rem,2.5vw,2.25rem);box-sizing:border-box;background:#e8e1d7}
 .room-panel>img[src*="BEDROOM"]{object-fit:contain;object-position:center;max-width:100%;}
 .drawing-crops{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.35rem,1vw,.8rem);height:100%;min-height:430px;padding:clamp(1rem,2vw,1.5rem);box-sizing:border-box;align-items:center}.drawing-crops img{width:100%;height:auto;max-height:100%;object-fit:contain;background:#f4efe7}.drawing-crops img:hover{transform:scale(1.035);z-index:1}
+.pdf-open-button{opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .3s ease,transform .3s ease}.room-panel:hover .pdf-open-button,.room-panel:focus-within .pdf-open-button{opacity:1;transform:translateY(0);pointer-events:auto}
+@media(hover:none){.pdf-open-button{opacity:1;transform:none;pointer-events:auto}}
 @media(max-width:480px){.room-panel>img{padding:.75rem}}
 .announcement{min-height:54px;height:auto;padding:14px 5vw;line-height:1.4}.announcement a{display:inline-flex;align-items:center;gap:12px;padding:4px 0}.announcement a b{display:inline-flex;align-items:center}.announcement a:hover{color:#cda777}@media(max-width:800px){.announcement{min-height:44px;padding:11px 6vw}.announcement a{gap:8px}}
