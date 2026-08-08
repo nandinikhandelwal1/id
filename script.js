@@ -47,6 +47,7 @@ if (zoomableDrawings.length) {
   const image = lightbox.querySelector('.drawing-lightbox__image');
   const title = lightbox.querySelector('.drawing-lightbox__title');
   let scale = 1;
+  let minScale = 1;
   let offsetX = 0;
   let offsetY = 0;
   let dragging = false;
@@ -58,15 +59,27 @@ if (zoomableDrawings.length) {
   const render = () => {
     image.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(${scale})`;
   };
+  const fitToStage = () => {
+    if (!image.naturalWidth || !image.naturalHeight) return;
+    minScale = Math.min(
+      (stage.clientWidth * .92) / image.naturalWidth,
+      (stage.clientHeight * .88) / image.naturalHeight,
+      1
+    );
+    scale = minScale;
+    offsetX = 0;
+    offsetY = 0;
+    render();
+  };
   const reset = () => {
-    scale = 1;
+    scale = minScale;
     offsetX = 0;
     offsetY = 0;
     render();
   };
   const adjustZoom = (amount) => {
-    scale = Math.min(5, Math.max(1, scale + amount));
-    if (scale === 1) {
+    scale = Math.min(5, Math.max(minScale, scale + amount));
+    if (scale === minScale) {
       offsetX = 0;
       offsetY = 0;
     }
@@ -80,7 +93,7 @@ if (zoomableDrawings.length) {
     title.textContent = getTitle(drawing);
     image.src = drawing.currentSrc || drawing.src;
     image.alt = drawing.alt || 'AutoCAD drawing';
-    reset();
+    if (image.complete) fitToStage();
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.classList.add('drawing-lightbox-open');
@@ -102,7 +115,13 @@ if (zoomableDrawings.length) {
   lightbox.querySelector('[data-zoom-in]').addEventListener('click', () => adjustZoom(.5));
   lightbox.querySelector('[data-zoom-out]').addEventListener('click', () => adjustZoom(-.5));
   lightbox.querySelector('[data-zoom-reset]').addEventListener('click', reset);
+  image.addEventListener('load', fitToStage);
+  stage.addEventListener('wheel', (event) => {
+    event.preventDefault();
+    adjustZoom(event.deltaY > 0 ? -.25 : .25);
+  }, { passive: false });
   stage.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0) return;
     dragging = true;
     startX = event.clientX;
     startY = event.clientY;
@@ -125,7 +144,7 @@ if (zoomableDrawings.length) {
   stage.addEventListener('pointerup', stopDragging);
   stage.addEventListener('pointercancel', stopDragging);
   stage.addEventListener('dblclick', () => {
-    if (scale === 1) adjustZoom(1.25);
+    if (scale === minScale) adjustZoom(1.25);
     else reset();
   });
   document.addEventListener('keydown', (event) => {
