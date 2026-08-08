@@ -82,3 +82,16 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
 .room-row.is-collapsed .room-accordion-icon::after{transform:translate(-50%,-50%) rotate(0)}
 @media(max-width:800px){.room-label{display:flex;align-items:center}.room-label p{margin-left:auto}.room-content{grid-template-columns:1fr 1fr;gap:12px}}
 @media(max-width:480px){.room-label{display:flex}.room-content{grid-template-columns:1fr}}
+:root{--ink:#1f292b;--accent:#b88b5c;--warm:#e4ddd1;--paper:#f6f2eb}
+.moodboard{padding:clamp(96px,14vw,220px) 10vw;background:var(--warm);border-top:1px solid var(--line)}
+.moodboard-inner{max-width:1480px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);gap:clamp(36px,8vw,140px);align-items:center}
+.moodboard h2{font:clamp(3rem,7vw,8rem)/.9 var(--serif);letter-spacing:-.06em;color:var(--ink)}
+.moodboard-placeholder{min-height:clamp(260px,32vw,520px);border:1px dashed rgba(32,35,34,.35);display:grid;place-items:center;text-align:center;padding:48px;position:relative;background:rgba(244,240,233,.24);overflow:hidden}
+.moodboard-placeholder::before{content:"";position:absolute;inset:18px;background-image:linear-gradient(rgba(32,35,34,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(32,35,34,.08) 1px,transparent 1px);background-size:40px 40px;opacity:.45;pointer-events:none}
+.moodboard-placeholder p,.moodboard-placeholder small,.moodboard-plus{position:relative;z-index:1}
+.moodboard-placeholder p{margin:0 0 8px;color:var(--ink);font-weight:600}
+.moodboard-placeholder small{display:block;max-width:280px;color:var(--muted);line-height:1.5}
+.moodboard-plus{display:block;font:4rem/1 var(--serif);color:var(--accent)}
+.portfolio-download{display:inline-flex;margin-top:2rem;align-items:center;gap:1rem}
+.portfolio-download:hover{transform:translateY(-3px);background:var(--ink);color:var(--paper)}
+@media(max-width:760px){.moodboard-inner{grid-template-columns:1fr;gap:40px}.moodboard{padding:90px 20px}.moodboard-placeholder{min-height:300px;padding:30px}.portfolio-download{width:100%;justify-content:space-between}}
