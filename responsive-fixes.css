@@ -1,0 +1,14 @@
+html,body{max-width:100%;overflow-x:clip}
+.hero{overflow:clip}
+
+@media(max-width:760px){
+  .site-header nav{display:none;transform:none}
+  .site-header nav.open{display:flex;transform:none}
+}
+
+@media(max-width:520px){
+  .links a{min-height:44px;display:flex;align-items:center}
+  .btn [aria-hidden="true"],
+  .links [aria-hidden="true"],
+  .decorative-arrow{display:none}
+}
