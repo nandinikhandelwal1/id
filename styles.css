@@ -230,3 +230,4 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
 .pdf-viewer__image{display:none;max-width:100%;max-height:calc(92vh - 62px);margin:auto;object-fit:contain}
 .pdf-viewer.image-mode .pdf-viewer__frame{display:none}.pdf-viewer.image-mode .pdf-viewer__image{display:block}
 @media(max-width:600px){.pdf-viewer{padding:0}.pdf-viewer__panel{width:100vw;height:100dvh;border:0}.pdf-viewer__bar{padding:10px 12px}.pdf-viewer__frame{min-height:0}}
+.project-image-stage{min-height:clamp(420px,42vw,720px);height:100%;overflow:hidden;background:#171c1b;touch-action:none;overscroll-behavior:contain}.project-image-stage img{height:100%;width:100%;object-fit:cover;object-position:center;will-change:transform}.project-secondary-image{overflow:hidden}
