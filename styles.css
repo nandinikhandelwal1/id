@@ -134,8 +134,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
   min-height: 300px;
   overflow: hidden;
   background: #e8e1d7;
-  touch-action: none;
-  overscroll-behavior: contain;
+  touch-action: pan-y pinch-zoom;
+  overscroll-behavior: auto;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
@@ -161,10 +161,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #cda777;outline-offset:5p
   will-change: transform;
 }
 
-.room-model-link {
-  touch-action: none;
-  overscroll-behavior: contain;
-}
+.room-model-link { touch-action: pan-y pinch-zoom; overscroll-behavior: auto; }
 
 .room-model-link model-viewer { touch-action: none; }
 @media (max-width:480px){
