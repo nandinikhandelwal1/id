@@ -1,6 +1,28 @@
 if (window.matchMedia('(max-width: 800px)').matches) {
   document.body.insertAdjacentHTML('beforeend', `<div class="mobile-dock"><a href="#top"><span class="dock-icon home-icon"><svg viewBox="0 0 24 24"><path d="m4 10 8-6 8 6v10H4Z"></path></svg></span>Home</a><a href="#about"><span class="dock-icon about-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="9" r="2"></circle><path d="M8.5 17c.8-2 2-3 3.5-3s2.7 1 3.5 3"></path></svg></span>About</a><a href="#project"><span class="dock-icon work-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4Z"></path></svg></span>Work</a><a href="#contact"><span class="dock-icon contact-icon"><svg viewBox="0 0 24 24"><path d="M5 19 19 5M9 5h10v10"></path></svg></span>Contact</a></div>`);
 }
+
+// Keep source PDFs and the full-resolution moodboard inside the site instead of opening a new tab.
+(() => {
+  const viewer = document.createElement('div');
+  viewer.className = 'pdf-viewer';
+  viewer.setAttribute('aria-hidden', 'true');
+  viewer.innerHTML = `<div class="pdf-viewer__panel" role="dialog" aria-modal="true" aria-label="Document viewer"><div class="pdf-viewer__bar"><span class="pdf-viewer__title"></span><button type="button" data-close-pdf aria-label="Close document viewer">Close ×</button></div><iframe class="pdf-viewer__frame" title="PDF document"></iframe><img class="pdf-viewer__image" alt=""></div>`;
+  document.body.appendChild(viewer);
+  const frame = viewer.querySelector('.pdf-viewer__frame');
+  const image = viewer.querySelector('.pdf-viewer__image');
+  const title = viewer.querySelector('.pdf-viewer__title');
+  const close = () => { viewer.classList.remove('is-open','image-mode'); viewer.setAttribute('aria-hidden','true'); frame.src='about:blank'; image.removeAttribute('src'); document.body.classList.remove('pdf-viewer-open'); };
+  const open = (url, label, isImage = false) => { title.textContent = label || 'Document viewer'; viewer.classList.toggle('image-mode', isImage); if (isImage) image.src = url; else frame.src = `${url}#view=FitH`; viewer.classList.add('is-open'); viewer.setAttribute('aria-hidden','false'); document.body.classList.add('pdf-viewer-open'); };
+  document.addEventListener('click', (event) => {
+    const pdf = event.target.closest('.pdf-open-button');
+    const mood = event.target.closest('.moodboard-art figcaption a');
+    if (pdf) { event.preventDefault(); open(pdf.href, 'AutoCAD drawing'); }
+    if (mood) { event.preventDefault(); open(mood.href, 'Project moodboard', true); }
+    if (event.target.closest('[data-close-pdf]') || event.target === viewer) close();
+  });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && viewer.classList.contains('is-open')) close(); });
+})();
 const socialIcons = {
   Instagram: '<img src="https://api.iconify.design/simple-icons:instagram.svg?color=%231f292b" alt="" aria-hidden="true">',
   LinkedIn: '<img src="https://api.iconify.design/simple-icons:linkedin.svg?color=%231f292b" alt="" aria-hidden="true">',
