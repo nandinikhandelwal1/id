@@ -122,18 +122,20 @@ const attachInlineDrawingInteractions = (stage, image) => {
   };
   const onPointerDown = (event) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return;
-    event.preventDefault();
     stage.setPointerCapture?.(event.pointerId);
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-    if (pointers.size >= 2) beginPinch();
+    if (pointers.size >= 2) {
+      event.preventDefault();
+      beginPinch();
+    }
     else dragStart = { x: event.clientX, y: event.clientY, offsetX, offsetY };
     stage.classList.add('is-dragging');
   };
   const onPointerMove = (event) => {
     if (!pointers.has(event.pointerId)) return;
-    event.preventDefault();
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     if (pointers.size >= 2 && pinchStart) {
+      event.preventDefault();
       const current = pinchState();
       const bounds = stage.getBoundingClientRect();
       const center = { x: bounds.width / 2, y: bounds.height / 2 };
@@ -141,7 +143,8 @@ const attachInlineDrawingInteractions = (stage, image) => {
       offsetX = current.midpoint.x - center.x - pinchStart.imageX * scale;
       offsetY = current.midpoint.y - center.y - pinchStart.imageY * scale;
       render();
-    } else if (pointers.size === 1 && dragStart) {
+    } else if (pointers.size === 1 && dragStart && event.pointerType === 'mouse') {
+      event.preventDefault();
       offsetX = dragStart.offsetX + event.clientX - dragStart.x;
       offsetY = dragStart.offsetY + event.clientY - dragStart.y;
       render();
@@ -187,8 +190,9 @@ document.querySelectorAll('.moodboard-image-stage > img').forEach((image) => {
 
 document.querySelectorAll('model-viewer').forEach((viewer) => {
   viewer.addEventListener('wheel', (event) => {
-    if (!event.ctrlKey) event.stopImmediatePropagation();
-  }, { capture: true, passive: true });
+    if (!event.ctrlKey) return;
+    event.preventDefault();
+  }, { passive: false });
 });
 if (drawingGrid && !drawingGrid.querySelector('[data-living-two]')) {
   drawingGrid.insertAdjacentHTML('beforeend', '<a class="drawing-card" data-living-two href="assets/drawings/LIVING%202%20FINAL.pdf" target="_blank"><img src="assets/drawings/LIVING%202%20FINAL-1.jpg" alt="Living room elevation II"><span>Living elevation II <b>↗</b></span></a>');
