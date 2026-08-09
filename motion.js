@@ -180,6 +180,11 @@ document.querySelectorAll('.room-panel > img').forEach((image) => {
   attachInlineDrawingInteractions(stage, image);
 });
 
+document.querySelectorAll('.moodboard-image-stage > img').forEach((image) => {
+  image.draggable = false;
+  attachInlineDrawingInteractions(image.parentElement, image);
+});
+
 document.querySelectorAll('model-viewer').forEach((viewer) => {
   viewer.addEventListener('wheel', (event) => {
     if (!event.ctrlKey) event.stopImmediatePropagation();
