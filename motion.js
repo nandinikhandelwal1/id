@@ -112,3 +112,220 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
   });
 }, { threshold: 0.12 });
 revealItems.forEach((item) => revealObserver.observe(item));
+if (!document.querySelector('.drawing-lightbox')) {
+  const lightbox = document.createElement('div');
+  lightbox.className = 'drawing-lightbox';
+  lightbox.innerHTML = `
+    <div class="drawing-lightbox__backdrop" data-close-drawing></div>
+    <div class="drawing-lightbox__dialog" role="dialog" aria-modal="true" aria-label="Drawing zoom viewer">
+      <div class="drawing-lightbox__toolbar">
+        <strong class="drawing-lightbox__title"></strong>
+        <div class="drawing-lightbox__actions">
+          <button type="button" data-zoom-out aria-label="Zoom out">−</button>
+          <button type="button" data-zoom-reset aria-label="Reset zoom">Reset</button>
+          <button type="button" data-zoom-in aria-label="Zoom in">+</button>
+          <button type="button" data-close-drawing aria-label="Close">×</button>
+        </div>
+      </div>
+      <div class="drawing-lightbox__stage" tabindex="0">
+        <img class="drawing-lightbox__image" alt="" draggable="false">
+        <span class="drawing-lightbox__hint">Pinch to zoom · drag to pan</span>
+      </div>
+    </div>`;
+  document.body.appendChild(lightbox);
+
+  const stage = lightbox.querySelector('.drawing-lightbox__stage');
+  const image = lightbox.querySelector('.drawing-lightbox__image');
+  const title = lightbox.querySelector('.drawing-lightbox__title');
+  const pointerMap = new Map();
+  let scale = 1;
+  let minimumScale = 1;
+  let offsetX = 0;
+  let offsetY = 0;
+  let activeImage = null;
+  let dragStart = null;
+  let pinchStart = null;
+
+  const clampScale = (value) => Math.min(8, Math.max(minimumScale, value));
+
+  const renderImage = () => {
+    image.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(${scale})`;
+  };
+
+  const fitImage = () => {
+    if (!image.naturalWidth || !image.naturalHeight) return;
+    const stageWidth = stage.clientWidth;
+    const stageHeight = stage.clientHeight;
+    minimumScale = Math.min(stageWidth / image.naturalWidth, stageHeight / image.naturalHeight, 1);
+    scale = minimumScale;
+    offsetX = 0;
+    offsetY = 0;
+    renderImage();
+  };
+
+  const resetImage = () => {
+    fitImage();
+    stage.focus({ preventScroll: true });
+  };
+
+  const closeLightbox = () => {
+    pointerMap.clear();
+    dragStart = null;
+    pinchStart = null;
+    lightbox.classList.remove('is-open');
+    document.body.classList.remove('drawing-lightbox-open');
+    image.removeAttribute('src');
+    activeImage = null;
+  };
+
+  const openLightbox = (sourceImage) => {
+    activeImage = sourceImage;
+    image.src = sourceImage.currentSrc || sourceImage.src;
+    image.alt = sourceImage.alt || 'AutoCAD drawing';
+    title.textContent = sourceImage.alt || sourceImage.closest('.drawing-card, .room-panel')?.querySelector('h2, h3, .drawing-card__title')?.textContent || 'Drawing';
+    lightbox.classList.add('is-open');
+    document.body.classList.add('drawing-lightbox-open');
+    if (image.complete) fitImage();
+  };
+
+  const getStagePoint = (event) => {
+    const bounds = stage.getBoundingClientRect();
+    return { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+  };
+
+  const getPointerPair = () => Array.from(pointerMap.values()).slice(0, 2);
+
+  const getPinchState = () => {
+    const pointerPair = getPointerPair();
+    const firstPointer = pointerPair[0];
+    const secondPointer = pointerPair[1];
+    const midpoint = {
+      x: (firstPointer.x + secondPointer.x) / 2,
+      y: (firstPointer.y + secondPointer.y) / 2
+    };
+    const deltaX = secondPointer.x - firstPointer.x;
+    const deltaY = secondPointer.y - firstPointer.y;
+    return { midpoint, distance: Math.hypot(deltaX, deltaY) };
+  };
+
+  const startPinch = () => {
+    const pinchState = getPinchState();
+    const stageCenterX = stage.clientWidth / 2;
+    const stageCenterY = stage.clientHeight / 2;
+    const imagePointX = (pinchState.midpoint.x - stageCenterX - offsetX) / scale;
+    const imagePointY = (pinchState.midpoint.y - stageCenterY - offsetY) / scale;
+    pinchStart = { ...pinchState, imagePointX, imagePointY, scale };
+    dragStart = null;
+  };
+
+  stage.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    event.preventDefault();
+    const point = getStagePoint(event);
+    pointerMap.set(event.pointerId, point);
+    try {
+      stage.setPointerCapture(event.pointerId);
+    } catch {}
+    if (pointerMap.size >= 2) {
+      startPinch();
+    } else {
+      dragStart = { x: point.x, y: point.y, offsetX, offsetY };
+    }
+  });
+
+  stage.addEventListener('pointermove', (event) => {
+    if (!pointerMap.has(event.pointerId)) return;
+    event.preventDefault();
+    pointerMap.set(event.pointerId, getStagePoint(event));
+    if (pointerMap.size >= 2) {
+      if (!pinchStart) startPinch();
+      const pinchState = getPinchState();
+      const stageCenterX = stage.clientWidth / 2;
+      const stageCenterY = stage.clientHeight / 2;
+      scale = clampScale(pinchStart.scale * (pinchState.distance / pinchStart.distance));
+      offsetX = pinchState.midpoint.x - stageCenterX - pinchStart.imagePointX * scale;
+      offsetY = pinchState.midpoint.y - stageCenterY - pinchStart.imagePointY * scale;
+      renderImage();
+      return;
+    }
+    if (!dragStart) return;
+    const point = pointerMap.get(event.pointerId);
+    offsetX = dragStart.offsetX + point.x - dragStart.x;
+    offsetY = dragStart.offsetY + point.y - dragStart.y;
+    renderImage();
+  });
+
+  const endPointer = (event) => {
+    pointerMap.delete(event.pointerId);
+    try {
+      stage.releasePointerCapture(event.pointerId);
+    } catch {}
+    if (pointerMap.size >= 2) {
+      startPinch();
+    } else if (pointerMap.size === 1) {
+      const remainingPointer = Array.from(pointerMap.entries())[0];
+      dragStart = { x: remainingPointer[1].x, y: remainingPointer[1].y, offsetX, offsetY };
+      pinchStart = null;
+    } else {
+      dragStart = null;
+      pinchStart = null;
+    }
+  };
+
+  stage.addEventListener('pointerup', endPointer);
+  stage.addEventListener('pointercancel', endPointer);
+  stage.addEventListener('wheel', (event) => {
+    if (!event.ctrlKey) return;
+    event.preventDefault();
+    event.stopPropagation();
+
+    const bounds = stage.getBoundingClientRect();
+    const point = {
+      x: event.clientX - bounds.left,
+      y: event.clientY - bounds.top,
+    };
+    const previousScale = scale;
+    const imagePointX = (point.x - stage.clientWidth / 2 - offsetX) / previousScale;
+    const imagePointY = (point.y - stage.clientHeight / 2 - offsetY) / previousScale;
+    scale = clampScale(scale * Math.exp(-event.deltaY * 0.01));
+    offsetX = point.x - stage.clientWidth / 2 - imagePointX * scale;
+    offsetY = point.y - stage.clientHeight / 2 - imagePointY * scale;
+    renderImage();
+  }, { passive: false });
+  image.addEventListener('load', fitImage);
+  window.addEventListener('resize', () => {
+    if (lightbox.classList.contains('is-open')) fitImage();
+  });
+
+  document.addEventListener('click', (event) => {
+    const drawingImage = event.target.closest('.drawing-card img, .room-panel > img');
+    if (drawingImage) {
+      event.preventDefault();
+      openLightbox(drawingImage);
+      return;
+    }
+    if (event.target.closest('[data-close-drawing]')) closeLightbox();
+    if (event.target.closest('[data-zoom-reset]')) resetImage();
+    if (event.target.closest('[data-zoom-in]')) {
+      scale = clampScale(scale * 1.35);
+      renderImage();
+    }
+    if (event.target.closest('[data-zoom-out]')) {
+      scale = clampScale(scale / 1.35);
+      renderImage();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (event.key === 'Escape') closeLightbox();
+    if (event.key === '+' || event.key === '=') {
+      scale = clampScale(scale * 1.35);
+      renderImage();
+    }
+    if (event.key === '-') {
+      scale = clampScale(scale / 1.35);
+      renderImage();
+    }
+  });
+}
