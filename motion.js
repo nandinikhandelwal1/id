@@ -80,6 +80,106 @@ document.querySelectorAll('.room-row').forEach((row, index) => {
   });
 });
 
+const attachInlineDrawingInteractions = (stage, image) => {
+  const pointers = new Map();
+  let scale = 1;
+  let minimumScale = 1;
+  let offsetX = 0;
+  let offsetY = 0;
+  let dragStart = null;
+  let pinchStart = null;
+
+  const clampScale = (value) => Math.min(8, Math.max(minimumScale, value));
+  const render = () => {
+    image.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(${scale})`;
+  };
+  const fit = () => {
+    if (!image.naturalWidth || !image.naturalHeight) return;
+    minimumScale = Math.min(stage.clientWidth / image.naturalWidth, stage.clientHeight / image.naturalHeight);
+    scale = minimumScale;
+    offsetX = 0;
+    offsetY = 0;
+    render();
+  };
+  const currentPointers = () => Array.from(pointers.values()).slice(0, 2);
+  const pinchState = () => {
+    const [first, second] = currentPointers();
+    return {
+      midpoint: { x: (first.x + second.x) / 2, y: (first.y + second.y) / 2 },
+      distance: Math.hypot(second.x - first.x, second.y - first.y),
+    };
+  };
+  const beginPinch = () => {
+    const current = pinchState();
+    const bounds = stage.getBoundingClientRect();
+    const center = { x: bounds.width / 2, y: bounds.height / 2 };
+    pinchStart = {
+      ...current,
+      scale,
+      imageX: (current.midpoint.x - center.x - offsetX) / scale,
+      imageY: (current.midpoint.y - center.y - offsetY) / scale,
+    };
+  };
+  const onPointerDown = (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    event.preventDefault();
+    stage.setPointerCapture?.(event.pointerId);
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (pointers.size >= 2) beginPinch();
+    else dragStart = { x: event.clientX, y: event.clientY, offsetX, offsetY };
+    stage.classList.add('is-dragging');
+  };
+  const onPointerMove = (event) => {
+    if (!pointers.has(event.pointerId)) return;
+    event.preventDefault();
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (pointers.size >= 2 && pinchStart) {
+      const current = pinchState();
+      const bounds = stage.getBoundingClientRect();
+      const center = { x: bounds.width / 2, y: bounds.height / 2 };
+      scale = clampScale(pinchStart.scale * current.distance / Math.max(1, pinchStart.distance));
+      offsetX = current.midpoint.x - center.x - pinchStart.imageX * scale;
+      offsetY = current.midpoint.y - center.y - pinchStart.imageY * scale;
+      render();
+    } else if (pointers.size === 1 && dragStart) {
+      offsetX = dragStart.offsetX + event.clientX - dragStart.x;
+      offsetY = dragStart.offsetY + event.clientY - dragStart.y;
+      render();
+    }
+  };
+  const onPointerEnd = (event) => {
+    pointers.delete(event.pointerId);
+    stage.releasePointerCapture?.(event.pointerId);
+    if (pointers.size >= 2) beginPinch();
+    else if (pointers.size === 1) {
+      const [remaining] = currentPointers();
+      dragStart = { x: remaining.x, y: remaining.y, offsetX, offsetY };
+      pinchStart = null;
+    } else {
+      dragStart = null;
+      pinchStart = null;
+      stage.classList.remove('is-dragging');
+    }
+  };
+
+  stage.addEventListener('pointerdown', onPointerDown);
+  stage.addEventListener('pointermove', onPointerMove);
+  stage.addEventListener('pointerup', onPointerEnd);
+  stage.addEventListener('pointercancel', onPointerEnd);
+  image.addEventListener('load', fit);
+  if (image.complete) fit();
+  window.addEventListener('resize', fit, { passive: true });
+};
+
+document.querySelectorAll('.room-panel > img').forEach((image) => {
+  const stage = document.createElement('div');
+  stage.className = 'inline-drawing-stage';
+  image.draggable = false;
+  image.replaceWith(stage);
+  stage.appendChild(image);
+  attachInlineDrawingInteractions(stage, image);
+});
+
 document.querySelectorAll('model-viewer').forEach((viewer) => {
   viewer.addEventListener('wheel', (event) => {
     if (!event.ctrlKey) event.stopImmediatePropagation();
@@ -298,7 +398,7 @@ if (!document.querySelector('.drawing-lightbox')) {
   });
 
   document.addEventListener('click', (event) => {
-    const drawingImage = event.target.closest('.drawing-card img, .room-panel > img');
+const drawingImage = event.target.closest('.drawing-card img');
     if (drawingImage) {
       event.preventDefault();
       openLightbox(drawingImage);
