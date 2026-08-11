@@ -19,7 +19,6 @@ if (window.matchMedia('(max-width: 800px)').matches) {
 
 const drawingFrame = document.querySelector('#drawing-pdf-frame');
 const drawingTitle = document.querySelector('#drawing-pdf-title');
-const drawingDownload = document.querySelector('#drawing-pdf-download');
 
 document.querySelectorAll('.drawing-tabs button').forEach((button) => {
   button.addEventListener('click', () => {
@@ -28,10 +27,9 @@ document.querySelectorAll('.drawing-tabs button').forEach((button) => {
     document.querySelectorAll('.drawing-tabs button').forEach((item) => item.classList.toggle('is-active', item === button));
     button.setAttribute('aria-selected', 'true');
     document.querySelectorAll('.drawing-tabs button:not(.is-active)').forEach((item) => item.setAttribute('aria-selected', 'false'));
-    drawingFrame.src = `${source}#view=FitH&toolbar=1`;
+    drawingFrame.src = `${source}#view=FitH&toolbar=0`;
     drawingFrame.title = `${title} PDF`;
     drawingTitle.textContent = title;
-    drawingDownload.href = source;
   });
 });
 
