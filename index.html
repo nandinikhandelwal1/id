@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Nandini Khandelwal - interior design portfolio">
   <title>Nandini Khandelwal - Interior Design</title>
-  <link rel="stylesheet" href="styles.css?v=13">
+  <link rel="stylesheet" href="styles.css?v=14">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=2">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 </head>
@@ -33,18 +33,18 @@
 
         <div class="main-model-shell">
           <div class="main-model-copy"><span class="project-step">01 / Explore the space</span><h3>The complete home,<br><i>in one model.</i></h3><p>Drag to orbit the model. Page scrolling stays natural and does not change the model zoom.</p></div>
-          <model-viewer src="assets/final-model-web.glb?v=11" camera-controls disable-zoom touch-action="pan-y" interaction-prompt="auto" shadow-intensity="1" exposure="1" environment-image="neutral" camera-target="6m 1.3m 7.5m" camera-orbit="45deg 65deg 30m" alt="Interactive 3D model of the 2 BHK residential home"></model-viewer>
+          <model-viewer src="assets/final-model-web.glb?v=11" camera-controls touch-action="pan-y pinch-zoom" interaction-prompt="auto" shadow-intensity="1" exposure="1" environment-image="neutral" camera-target="6m 1.3m 7.5m" camera-orbit="45deg 65deg 30m" alt="Interactive 3D model of the 2 BHK residential home"></model-viewer>
           <div class="model-caption"><span>Interactive 3D model</span><span>Drag to orbit - scroll to continue</span></div>
         </div>
 
         <div class="project-story"><div class="story-copy"><p class="eyebrow">Material & atmosphere</p><h3>From plan<br>to <i>presence.</i></h3><p>The project brings together planning, elevations, material studies and rendered direction to imagine a refined two-bedroom home with a calm, contemporary character.</p></div></div>
       </section>
 
-      <section class="moodboard" id="moodboard"><div class="section-index">Project 01 / Moodboard</div><div class="moodboard-inner"><div><p class="eyebrow">02 / Material direction</p><h2>A visual language<br>in <i>balance.</i></h2><p class="moodboard-intro">A warm, layered direction for the same 2 BHK residential concept - balancing natural textures, crafted details and softly lit spaces.</p></div><figure class="moodboard-art"><div class="moodboard-image-stage inline-drawing-stage" tabindex="0" aria-label="Residential project moodboard"><img src="assets/moodboard-project-1.jpg" alt="Moodboard for the 2 BHK residential home project"></div><figcaption><span>Project 01 - Moodboard</span><span>Displayed in full on this page</span></figcaption></figure></div></section>
+      <section class="moodboard" id="moodboard"><div class="section-index">Project 01 / Moodboard</div><div class="moodboard-inner"><div><p class="eyebrow">02 / Material direction</p><h2>A visual language<br>in <i>balance.</i></h2><p class="moodboard-intro">A warm, layered direction for the same 2 BHK residential concept - balancing natural textures, crafted details and softly lit spaces.</p></div><figure class="moodboard-art"><img class="moodboard-full-image" src="assets/moodboard-project-1.jpg" alt="Moodboard for the 2 BHK residential home project"><figcaption><span>Project 01 - Moodboard</span><span>Material direction</span></figcaption></figure></div></section>
 
       <section class="drawings" id="drawings">
         <div class="section-index">Project 01 / Technical drawings</div>
-        <div class="drawings-head"><h2>Drawings<br><i>meet space.</i></h2><p>These AutoCAD sheets belong to the same residential project. Choose a drawing below to inspect the original PDF directly on this page.</p></div>
+        <div class="drawings-head"><h2>Drawings<br><i>meet space.</i></h2><p>These AutoCAD sheets belong to the same residential project. Choose a drawing to compare the complete technical sheet with the rendered interior beside it.</p></div>
         <div class="drawing-viewer">
           <div class="drawing-tabs" role="tablist" aria-label="Residential drawing PDFs">
             <button class="is-active" type="button" data-pdf-src="assets/drawings/Final%20layout%20Flooring..-Model.pdf" data-pdf-title="Flooring layout">Flooring</button>
@@ -53,7 +53,10 @@
             <button type="button" data-pdf-src="assets/drawings/KITCHEN%20ELEVATION%20FINAL.pdf" data-pdf-title="Kitchen elevation">Kitchen</button>
             <button type="button" data-pdf-src="assets/drawings/BEDROOM%20ELEVATION.pdf" data-pdf-title="Bedroom elevation">Bedroom</button>
           </div>
-          <div class="embedded-pdf-card"><div class="embedded-pdf-bar"><span id="drawing-pdf-title">Flooring layout</span><span>Embedded drawing viewer</span></div><iframe id="drawing-pdf-frame" title="Flooring layout PDF" loading="lazy" src="assets/drawings/Final%20layout%20Flooring..-Model.pdf#view=FitH&toolbar=0"></iframe></div>
+          <div class="drawing-comparison">
+            <figure class="comparison-panel drawing-panel"><figcaption><span id="drawing-pdf-title">Flooring layout</span><span>AutoCAD drawing</span></figcaption><img id="drawing-sheet-image" src="assets/drawings/Final layout Flooring..-Model-1.jpg" alt="Full Flooring layout AutoCAD drawing"></figure>
+            <figure class="comparison-panel render-panel"><figcaption><span id="render-title">Residential perspective</span><span>Rendered image</span></figcaption><img id="drawing-render-image" src="assets/renders/guest-bedroom-render.png" alt="Rendered interior image for the residential project"></figure>
+          </div>
         </div>
       </section>
     </article>
@@ -75,7 +78,7 @@
   </main>
 
   <footer><span>© 2026 Nandini Khandelwal</span><span>Interiors with intention.</span><span>Noida / India</span></footer>
-  <script src="resume.js?v=13"></script>
-  <script src="motion.js?v=13"></script>
+  <script src="resume.js?v=14"></script>
+  <script src="motion.js?v=14"></script>
 </body>
 </html>

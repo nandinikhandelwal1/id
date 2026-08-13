@@ -17,24 +17,34 @@ if (window.matchMedia('(max-width: 800px)').matches) {
   document.body.insertAdjacentHTML('beforeend', `<div class="mobile-dock" aria-label="Quick navigation"><a href="#top"><span class="dock-icon home-icon"><svg viewBox="0 0 24 24"><path d="m4 10 8-6 8 6v10H4Z"></path></svg></span>Home</a><a href="#about"><span class="dock-icon about-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="9" r="2"></circle><path d="M8.5 17c.8-2 2-3 3.5-3s2.7 1 3.5 3"></path></svg></span>About</a><a href="#project"><span class="dock-icon work-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4Z"></path></svg></span>Work</a><a href="#contact"><span class="dock-icon contact-icon"><svg viewBox="0 0 24 24"><path d="M5 19 19 5M9 5h10v10"></path></svg></span>Contact</a></div>`);
 }
 
-const drawingFrame = document.querySelector('#drawing-pdf-frame');
+const drawingImage = document.querySelector('#drawing-sheet-image');
 const drawingTitle = document.querySelector('#drawing-pdf-title');
+const drawingRenderImage = document.querySelector('#drawing-render-image');
+const renderTitle = document.querySelector('#render-title');
+const drawingImages = {
+  'Flooring layout': 'assets/drawings/Final layout Flooring..-Model-1.jpg',
+  'Living elevation I': 'assets/drawings/LIVING 1 FINAL-1.jpg',
+  'Living elevation II': 'assets/drawings/LIVING 2 FINAL-1.jpg',
+  'Kitchen elevation': 'assets/drawings/KITCHEN ELEVATION FINAL-1.jpg',
+  'Bedroom elevation': 'assets/drawings/BEDROOM ELEVATION-1.jpg'
+};
 
 document.querySelectorAll('.drawing-tabs button').forEach((button) => {
   button.addEventListener('click', () => {
-    const source = button.dataset.pdfSrc;
     const title = button.dataset.pdfTitle;
     document.querySelectorAll('.drawing-tabs button').forEach((item) => item.classList.toggle('is-active', item === button));
     button.setAttribute('aria-selected', 'true');
     document.querySelectorAll('.drawing-tabs button:not(.is-active)').forEach((item) => item.setAttribute('aria-selected', 'false'));
-    drawingFrame.src = `${source}#view=FitH&toolbar=0`;
-    drawingFrame.title = `${title} PDF`;
+    drawingImage.src = drawingImages[title];
+    drawingImage.alt = `Full ${title} AutoCAD drawing`;
     drawingTitle.textContent = title;
+    renderTitle.textContent = title === 'Bedroom elevation' ? 'Guest bedroom perspective' : 'Residential rendered study';
+    drawingRenderImage.alt = `${renderTitle.textContent} for the residential project`;
   });
 });
 
-// model-viewer's disable-zoom attribute prevents wheel zoom. Stopping the
-// component's wheel handler in capture phase leaves normal page scrolling intact.
+// Keep ordinary mouse-wheel scrolling on the page while leaving touch pinch
+// gestures available to model-viewer for zooming.
 window.addEventListener('wheel', (event) => {
   if (event.target.closest?.('model-viewer')) event.stopImmediatePropagation();
 }, { capture: true, passive: true });
