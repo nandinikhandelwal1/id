@@ -19,7 +19,7 @@ if (window.matchMedia('(max-width: 800px)').matches) {
 
 const drawingImage = document.querySelector('#drawing-sheet-image');
 const drawingTitle = document.querySelector('#drawing-pdf-title');
-const drawingRenderImage = document.querySelector('#drawing-render-image');
+const drawingRoomModel = document.querySelector('#drawing-room-model');
 const renderTitle = document.querySelector('#render-title');
 const drawingImages = {
   'Flooring layout': 'assets/drawings/web/flooring.png',
@@ -27,6 +27,13 @@ const drawingImages = {
   'Living elevation II': 'assets/drawings/web/living-2.png',
   'Kitchen elevation': 'assets/drawings/web/kitchen.png',
   'Bedroom elevation': 'assets/drawings/web/bedroom.png'
+};
+const drawingModels = {
+  'Flooring layout': ['assets/models/flooring-study.glb?v=1', 'Complete apartment study'],
+  'Living elevation I': ['assets/models/living-1-study.glb?v=1', 'Living I volume study'],
+  'Living elevation II': ['assets/models/living-2-study.glb?v=1', 'Living II volume study'],
+  'Kitchen elevation': ['assets/models/kitchen-study.glb?v=1', 'Kitchen volume study'],
+  'Bedroom elevation': ['assets/models/bedroom-study.glb?v=1', 'Bedroom volume study']
 };
 
 document.querySelectorAll('.drawing-tabs button').forEach((button) => {
@@ -38,8 +45,12 @@ document.querySelectorAll('.drawing-tabs button').forEach((button) => {
     drawingImage.src = drawingImages[title];
     drawingImage.alt = `Full ${title} AutoCAD drawing`;
     drawingTitle.textContent = title;
-    renderTitle.textContent = title === 'Bedroom elevation' ? 'Guest bedroom perspective' : 'Residential rendered study';
-    drawingRenderImage.alt = `${renderTitle.textContent} for the residential project`;
+    const [modelSource, modelTitle] = drawingModels[title];
+    renderTitle.textContent = modelTitle;
+    drawingRoomModel.src = modelSource;
+    drawingRoomModel.alt = `Interactive 3D ${modelTitle.toLowerCase()} built from the AutoCAD drawing`;
+    drawingRoomModel.cameraOrbit = title === 'Flooring layout' ? '35deg 55deg auto' : '25deg 67deg auto';
+    drawingRoomModel.jumpCameraToGoal?.();
   });
 });
 

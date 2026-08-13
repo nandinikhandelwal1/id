@@ -351,6 +351,9 @@ img,model-viewer,iframe{max-width:100%}
 .comparison-panel figcaption{display:flex;justify-content:space-between;gap:16px;min-height:54px;padding:16px;background:#eee7dc;border-bottom:1px solid rgba(32,35,34,.14);font:500 10px var(--mono);letter-spacing:.09em;text-transform:uppercase}
 .comparison-panel img{display:block;width:100%;height:clamp(420px,42vw,720px);padding:20px;background:#e8e1d7;object-fit:contain}
 .render-panel img{padding:0;object-fit:cover}
+.room-study-panel{position:relative;background:linear-gradient(145deg,#ddd5ca,#f3eee7)}
+.room-study-panel model-viewer{display:block;width:100%;height:clamp(420px,42vw,720px);background:transparent;touch-action:pan-y pinch-zoom;--poster-color:transparent}
+.room-model-hint{position:absolute;right:16px;bottom:14px;padding:8px 10px;background:#f6f2ebdf;color:#4e4d48;font:9px var(--mono);letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
 .main-model-shell model-viewer{touch-action:pan-y pinch-zoom}
 .board-page-stage{display:grid;place-items:center;width:100%;overflow:hidden;background:#252928;padding:18px}
 .board-page-stage img{display:block;width:auto;max-width:100%;height:auto;object-fit:contain}
@@ -387,6 +390,7 @@ img,model-viewer,iframe{max-width:100%}
   .project-documents>.document-embed{grid-column:1}
   .drawing-comparison{grid-template-columns:1fr;gap:14px}
   .comparison-panel img{height:min(84vw,620px)}
+  .room-study-panel model-viewer{height:min(84vw,620px);min-height:420px}
   .book-page-stage{height:auto;min-height:0;padding:10px}
   .board-page-stage{padding:10px}
 }
@@ -401,6 +405,7 @@ img,model-viewer,iframe{max-width:100%}
   .model-caption span{display:block}
   .drawing-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
   .drawing-tabs button{padding:9px 8px}
+  .room-study-panel model-viewer{height:72vw;min-height:360px}
   .embedded-pdf-bar{align-items:flex-start;flex-direction:column}
   .embedded-pdf-bar a{width:100%;text-align:center}
   .embedded-pdf-card iframe,.document-embed iframe{height:68vh;min-height:460px}
