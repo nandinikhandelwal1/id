@@ -352,7 +352,8 @@ img,model-viewer,iframe{max-width:100%}
 .comparison-panel img{display:block;width:100%;height:clamp(420px,42vw,720px);padding:20px;background:#e8e1d7;object-fit:contain}
 .render-panel img{padding:0;object-fit:cover}
 .main-model-shell model-viewer{touch-action:pan-y pinch-zoom}
-.board-viewer>img{display:block;width:100%;height:auto;object-fit:contain;background:#e8e1d7}
+.board-page-stage{display:grid;place-items:center;width:100%;overflow:hidden;background:#252928;padding:18px}
+.board-page-stage img{display:block;width:auto;max-width:100%;height:auto;object-fit:contain}
 .book-page-stage{display:grid;place-items:center;width:100%;height:auto;min-height:0;overflow:hidden;background:#252928;padding:18px}
 .book-page-stage img{display:block;width:auto;max-width:100%;height:auto;max-height:none;object-fit:contain}
 .book-controls{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;padding:14px 16px;background:#eee7dc;border-top:1px solid rgba(32,35,34,.14)}
@@ -364,6 +365,9 @@ img,model-viewer,iframe{max-width:100%}
 .book-page-dots span.is-active{background:var(--ink);transform:scale(1.5)}
 
 @media(min-width:801px){
+  .board-viewer{display:grid;grid-template-rows:auto minmax(0,1fr);height:calc(100dvh - 120px);min-height:600px;max-height:900px}
+  .board-page-stage{height:100%;min-height:0}
+  .board-page-stage img{align-self:stretch;justify-self:stretch;width:100%!important;height:100%!important;min-height:0!important;max-width:100%!important;max-height:100%!important;object-fit:contain}
   .book-viewer{display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:calc(100dvh - 120px);min-height:600px;max-height:900px}
   .book-page-stage{height:100%;min-height:0;padding:18px}
   .book-viewer .book-page-stage img{align-self:stretch;justify-self:stretch;width:100%!important;height:100%!important;min-height:0!important;max-width:100%!important;max-height:100%!important;object-fit:contain}
@@ -384,6 +388,7 @@ img,model-viewer,iframe{max-width:100%}
   .drawing-comparison{grid-template-columns:1fr;gap:14px}
   .comparison-panel img{height:min(84vw,620px)}
   .book-page-stage{height:auto;min-height:0;padding:10px}
+  .board-page-stage{padding:10px}
 }
 
 @media(max-width:480px){
@@ -401,6 +406,7 @@ img,model-viewer,iframe{max-width:100%}
   .embedded-pdf-card iframe,.document-embed iframe{height:68vh;min-height:460px}
   .project-secondary-image img{aspect-ratio:3/4}
   .book-page-stage{height:auto;min-height:0;padding:6px}
+  .board-page-stage{padding:6px}
   .book-controls{grid-template-columns:1fr 1fr;gap:8px}
   .book-page-dots{display:none}
 }
