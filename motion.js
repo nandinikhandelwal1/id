@@ -22,11 +22,11 @@ const drawingTitle = document.querySelector('#drawing-pdf-title');
 const drawingRenderImage = document.querySelector('#drawing-render-image');
 const renderTitle = document.querySelector('#render-title');
 const drawingImages = {
-  'Flooring layout': 'assets/drawings/Final layout Flooring..-Model-1.jpg',
-  'Living elevation I': 'assets/drawings/LIVING 1 FINAL-1.jpg',
-  'Living elevation II': 'assets/drawings/LIVING 2 FINAL-1.jpg',
-  'Kitchen elevation': 'assets/drawings/KITCHEN ELEVATION FINAL-1.jpg',
-  'Bedroom elevation': 'assets/drawings/BEDROOM ELEVATION-1.jpg'
+  'Flooring layout': 'assets/drawings/web/flooring.png',
+  'Living elevation I': 'assets/drawings/web/living-1.png',
+  'Living elevation II': 'assets/drawings/web/living-2.png',
+  'Kitchen elevation': 'assets/drawings/web/kitchen.png',
+  'Bedroom elevation': 'assets/drawings/web/bedroom.png'
 };
 
 document.querySelectorAll('.drawing-tabs button').forEach((button) => {
