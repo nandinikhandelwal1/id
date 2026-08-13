@@ -69,7 +69,7 @@ if (bookPageImage) {
 // Keep ordinary mouse-wheel scrolling on the page while leaving touch pinch
 // gestures available to model-viewer for zooming.
 window.addEventListener('wheel', (event) => {
-  if (event.target.closest?.('model-viewer')) event.stopImmediatePropagation();
+  if (event.target.closest?.('model-viewer') && !event.ctrlKey) event.stopImmediatePropagation();
 }, { capture: true, passive: true });
 
 const socialIcons = {
