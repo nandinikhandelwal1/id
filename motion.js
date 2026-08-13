@@ -43,6 +43,29 @@ document.querySelectorAll('.drawing-tabs button').forEach((button) => {
   });
 });
 
+const bookPageImage = document.querySelector('#book-page-image');
+const bookPageStatus = document.querySelector('#book-page-status');
+const bookPrevious = document.querySelector('#book-previous');
+const bookNext = document.querySelector('#book-next');
+const bookPageCount = 15;
+let bookPage = 1;
+
+const renderBookPage = () => {
+  const number = String(bookPage).padStart(2, '0');
+  bookPageImage.src = `assets/projects/sculpted-savannah/pages/page-${number}.jpg`;
+  bookPageImage.alt = `South Africa project book page ${bookPage} of ${bookPageCount}`;
+  bookPageStatus.textContent = `Page ${bookPage} of ${bookPageCount}`;
+  bookPrevious.disabled = bookPage === 1;
+  bookNext.disabled = bookPage === bookPageCount;
+  document.querySelectorAll('.book-page-dots span').forEach((dot, index) => dot.classList.toggle('is-active', index + 1 === bookPage));
+};
+
+if (bookPageImage) {
+  document.querySelector('.book-page-dots').innerHTML = Array.from({ length: bookPageCount }, (_, index) => `<span class="${index === 0 ? 'is-active' : ''}"></span>`).join('');
+  bookPrevious.addEventListener('click', () => { if (bookPage > 1) { bookPage -= 1; renderBookPage(); } });
+  bookNext.addEventListener('click', () => { if (bookPage < bookPageCount) { bookPage += 1; renderBookPage(); } });
+}
+
 // Keep ordinary mouse-wheel scrolling on the page while leaving touch pinch
 // gestures available to model-viewer for zooming.
 window.addEventListener('wheel', (event) => {
