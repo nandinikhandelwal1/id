@@ -35,7 +35,7 @@ const drawingRenders = {
   'Living elevation II': ['assets/drawings/placeholders/living-ii.svg', 'Living II rendered placeholder'],
   'Kitchen elevation': ['assets/drawings/placeholders/kitchen.svg', 'Kitchen rendered placeholder'],
   'Bedroom elevation': ['assets/drawings/placeholders/bedroom.svg', 'Bedroom rendered placeholder'],
-  'Guest bedroom plan': ['assets/drawings/placeholders/guest-bedroom.svg', 'Guest bedroom rendered placeholder']
+  'Guest bedroom plan': ['assets/renders/guest-bedroom-render.png', 'Guest bedroom render']
 };
 
 document.querySelectorAll('.drawing-tabs button').forEach((button) => {
@@ -77,11 +77,6 @@ if (bookPageImage) {
   bookNext.addEventListener('click', () => { if (bookPage < bookPageCount) { bookPage += 1; renderBookPage(); } });
 }
 
-// Keep ordinary mouse-wheel scrolling on the page while leaving touch pinch
-// gestures available to model-viewer for zooming.
-window.addEventListener('wheel', (event) => {
-  if (event.target.closest?.('model-viewer') && !event.ctrlKey) event.stopImmediatePropagation();
-}, { capture: true, passive: true });
 
 const socialIcons = {
   Instagram: '<img src="https://api.iconify.design/simple-icons:instagram.svg?color=%231f292b" alt="" aria-hidden="true">',

@@ -354,7 +354,7 @@ img,model-viewer,iframe{max-width:100%}
 .room-study-panel{position:relative;background:linear-gradient(145deg,#ddd5ca,#f3eee7)}
 .room-study-panel model-viewer{display:block;width:100%;height:clamp(420px,42vw,720px);background:transparent;touch-action:pan-y pinch-zoom;--poster-color:transparent}
 .room-model-hint{position:absolute;right:16px;bottom:14px;padding:8px 10px;background:#f6f2ebdf;color:#4e4d48;font:9px var(--mono);letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
-.main-model-shell model-viewer{touch-action:pan-y pinch-zoom}
+.main-model-shell model-viewer{touch-action:pan-y}
 .board-page-stage{display:grid;place-items:center;width:100%;overflow:hidden;background:#252928;padding:18px}
 .board-page-stage img{display:block;width:auto;max-width:100%;height:auto;object-fit:contain}
 .book-page-stage{display:grid;place-items:center;width:100%;height:auto;min-height:0;overflow:hidden;background:#252928;padding:18px}
