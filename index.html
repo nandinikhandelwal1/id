@@ -44,7 +44,7 @@
 
       <section class="drawings" id="drawings">
         <div class="section-index">Project 01 / Technical drawings</div>
-        <div class="drawings-head"><h2>Drawings<br><i>meet space.</i></h2><p>Choose a drawing to compare the complete technical sheet with an interactive 3D study built from its plan, elevation and furniture layout.</p></div>
+        <div class="drawings-head"><h2>Drawings<br><i>meet space.</i></h2><p>Choose a drawing to compare the complete technical sheet with a rendered room placeholder. The apartment model above remains the interactive 3D view.</p></div>
         <div class="drawing-viewer">
           <div class="drawing-tabs" role="tablist" aria-label="Residential drawing PDFs">
             <button class="is-active" type="button" data-pdf-src="assets/drawings/Final%20layout%20Flooring..-Model.pdf" data-pdf-title="Flooring layout">Flooring</button>
@@ -52,10 +52,11 @@
             <button type="button" data-pdf-src="assets/drawings/LIVING%202%20FINAL.pdf" data-pdf-title="Living elevation II">Living II</button>
             <button type="button" data-pdf-src="assets/drawings/KITCHEN%20ELEVATION%20FINAL.pdf" data-pdf-title="Kitchen elevation">Kitchen</button>
             <button type="button" data-pdf-src="assets/drawings/BEDROOM%20ELEVATION.pdf" data-pdf-title="Bedroom elevation">Bedroom</button>
+            <button type="button" data-pdf-src="assets/drawings/Final%20layout%20Flooring..-Model.pdf" data-pdf-title="Guest bedroom plan">Guest bedroom</button>
           </div>
           <div class="drawing-comparison">
             <figure class="comparison-panel drawing-panel"><figcaption><span id="drawing-pdf-title">Flooring layout</span><span>AutoCAD drawing</span></figcaption><img id="drawing-sheet-image" src="assets/drawings/web/flooring.png" alt="Full Flooring layout AutoCAD drawing"></figure>
-            <figure class="comparison-panel room-study-panel"><figcaption><span id="render-title">Complete apartment study</span><span>Interactive 3D model</span></figcaption><model-viewer id="drawing-room-model" src="assets/models/flooring-study.glb?v=1" camera-controls touch-action="pan-y pinch-zoom" interaction-prompt="auto" shadow-intensity="1.1" exposure="1" environment-image="neutral" camera-orbit="35deg 55deg auto" min-camera-orbit="auto auto 2m" max-camera-orbit="auto auto 40m" alt="Interactive 3D study of the complete residential flooring layout"></model-viewer><span class="room-model-hint">Drag to orbit · pinch to zoom</span></figure>
+            <figure class="comparison-panel room-study-panel"><figcaption><span id="render-title">Complete apartment study</span><span>Rendered image placeholder</span></figcaption><img id="drawing-room-image" src="assets/drawings/placeholders/apartment-study.svg" alt="Rendered image placeholder for the complete apartment study"><span class="room-model-hint">Rendered placeholder · interactive model above</span></figure>
           </div>
         </div>
       </section>
