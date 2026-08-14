@@ -35,7 +35,7 @@ const drawingRenders = {
   'Living elevation II': ['assets/drawings/placeholders/living-ii.svg', 'Living II rendered placeholder'],
   'Kitchen elevation': ['assets/drawings/placeholders/kitchen.svg', 'Kitchen rendered placeholder'],
   'Bedroom elevation': ['assets/drawings/placeholders/bedroom.svg', 'Bedroom rendered placeholder'],
-  'Guest bedroom plan': ['assets/renders/guest-bedroom-render-v2.png', 'Guest bedroom render']
+  'Guest bedroom plan': ['assets/renders/guest-bedroom-render.png', 'Guest bedroom render']
 };
 
 document.querySelectorAll('.drawing-tabs button').forEach((button) => {
