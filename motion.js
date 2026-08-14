@@ -27,7 +27,7 @@ const drawingImages = {
   'Living elevation II': 'assets/drawings/web/living-2.png',
   'Kitchen elevation': 'assets/drawings/web/kitchen.png',
   'Bedroom elevation': 'assets/drawings/web/bedroom.png',
-  'Guest bedroom plan': 'assets/drawings/web/guest-bedroom-plan.png'
+  'Guest bedroom plan': 'assets/drawings/web/guest-bedroom-plan-crop.png'
 };
 const drawingRenders = {
   'Flooring layout': ['assets/drawings/placeholders/apartment-study.svg', 'Complete apartment study'],
@@ -35,7 +35,7 @@ const drawingRenders = {
   'Living elevation II': ['assets/drawings/placeholders/living-ii.svg', 'Living II rendered placeholder'],
   'Kitchen elevation': ['assets/drawings/placeholders/kitchen.svg', 'Kitchen rendered placeholder'],
   'Bedroom elevation': ['assets/drawings/placeholders/bedroom.svg', 'Bedroom rendered placeholder'],
-  'Guest bedroom plan': ['assets/renders/guest-bedroom-render.png', 'Guest bedroom render']
+  'Guest bedroom plan': ['assets/renders/guest-bedroom-render-v2.png', 'Guest bedroom render']
 };
 
 document.querySelectorAll('.drawing-tabs button').forEach((button) => {
