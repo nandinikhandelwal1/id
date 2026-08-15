@@ -23,6 +23,38 @@ const drawingRoomImage = document.querySelector('#drawing-room-image');
 const renderTitle = document.querySelector('#render-title');
 const mainModel = document.querySelector('.main-model-shell model-viewer');
 
+// Restore a warmer, presentation-ready material response for the imported model.
+// The source scene contains the detailed meshes, but some viewers flatten its
+// material values. These small, name-based adjustments keep screens readable
+// and give wood, metal, glass and fabrics believable roughness in the browser.
+mainModel?.addEventListener('load', () => {
+  const materials = mainModel.model?.materials || [];
+  materials.forEach((material) => {
+    const key = `${material.name || ''}`.toLowerCase();
+    const pbr = material.pbrMetallicRoughness;
+    if (!pbr) return;
+    if (/(screen|tv|television|display|monitor)/.test(key)) {
+      pbr.setBaseColorFactor([0.012, 0.018, 0.022, 1]);
+      pbr.setMetallicFactor(0.28);
+      pbr.setRoughnessFactor(0.16);
+      if ('emissiveFactor' in material) material.emissiveFactor = [0.015, 0.025, 0.035];
+    } else if (/(wood|oak|walnut|timber|veneer)/.test(key)) {
+      pbr.setMetallicFactor(0.02);
+      pbr.setRoughnessFactor(0.38);
+    } else if (/(metal|steel|chrome|brass|gold|handle|fixture)/.test(key)) {
+      pbr.setMetallicFactor(0.82);
+      pbr.setRoughnessFactor(0.22);
+    } else if (/(glass|mirror)/.test(key)) {
+      pbr.setMetallicFactor(0.08);
+      pbr.setRoughnessFactor(0.08);
+      material.setAlphaMode?.('BLEND');
+    } else if (/(fabric|sofa|curtain|carpet|rug|upholstery|cushion)/.test(key)) {
+      pbr.setMetallicFactor(0);
+      pbr.setRoughnessFactor(0.72);
+    }
+  });
+});
+
 const drawingImages = {
   'Flooring layout': 'assets/drawings/web/flooring.png',
   'Living elevation I': 'assets/drawings/web/living-1.png',
