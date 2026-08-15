@@ -21,6 +21,17 @@ const drawingImage = document.querySelector('#drawing-sheet-image');
 const drawingTitle = document.querySelector('#drawing-pdf-title');
 const drawingRoomImage = document.querySelector('#drawing-room-image');
 const renderTitle = document.querySelector('#render-title');
+const mainModel = document.querySelector('.main-model-shell model-viewer');
+
+// Wheel over the main viewer moves the camera vertically instead of zooming.
+mainModel?.addEventListener('wheel', (event) => {
+  event.preventDefault();
+  const target = mainModel.getCameraTarget?.();
+  if (!target) return;
+  target.y = Math.max(-1.5, Math.min(5.5, target.y + event.deltaY * 0.004));
+  mainModel.cameraTarget = `${target.x}m ${target.y}m ${target.z}m`;
+}, { passive: false });
+
 const drawingImages = {
   'Flooring layout': 'assets/drawings/web/flooring.png',
   'Living elevation I': 'assets/drawings/web/living-1.png',
