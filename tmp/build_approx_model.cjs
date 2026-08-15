@@ -22,4 +22,7 @@ box('Kitchen backsplash',5.8,2.0,-4.22,4.7,1.4,.06,M.blue); box('Kitchen overhea
 // two bathroom suites and the master walk-in closet from the flooring plan
 box('Common bath floor',4.8,.04,-5.0,2.0,.08,1.7,M.white); box('Common vanity',4.4,.75,-5.55,.7,1.2,.5,M.wood); box('Common shower',5.35,.9,-4.55,.65,1.8,.65,M.blue); box('Common WC',5.2,.45,-5.45,.5,.7,.55,M.white);
 box('Master bath floor',7.3,.04,1.0,2.6,.08,2.4,M.white); box('Master vanity',6.55,.75,1.0,.65,1.2,.55,M.wood); box('Master shower',8.15,.9,1.0,.7,1.8,.7,M.blue); box('Master WC',7.0,.45,2.0,.5,.7,.55,M.white); box('Walk-in closet',7.2,1.2,2.8,2.4,2.2,.35,M.wood);
+// elevation-inspired feature details
+box('Living fluted feature',-3.4,1.8,-5.68,1.15,2.7,.08,M.wood); box('Living console',-3.4,.55,-5.45,3.8,.65,.55,M.white); box('Dining bar top',2.0,1.5,-3.0,2.2,.16,.65,M.wood); box('Dining bar face',2.0,.85,-3.22,2.2,1.1,.12,M.blue);
+box('Master fluted headboard',5.6,1.8,4.82,3.5,2.5,.1,M.wood); box('Master bed throw',5.6,1.02,3.0,2.7,.12,.8,M.cream); box('Guest wall panel',-6.1,1.6,4.72,2.9,2.2,.08,M.wood);
 const io=new NodeIO(); io.write('assets/apartment-approximation.glb',doc); console.log('wrote');
