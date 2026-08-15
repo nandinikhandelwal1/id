@@ -16,7 +16,7 @@ box('Living sofa',1.3,.6,-1.0,4.2,1.1,1.0,M.cream); box('Accent chair',-1.8,.55,
 box('Kitchen counter',5.8,.9,-3.8,4.8,1.8,.75,M.wood); box('Island',3.4,.8,-3.1,2.5,1.5,1.0,M.white); box('Dining table',-1.0,.85,-4.1,2.5,.15,1.2,M.wood); for(let i=0;i<4;i++) box('Dining chair '+i,-2.0+i*0.7,.55,-4.1,.42,1,.42,M.cream);
 // lighting accents / plants
 box('Teal vase',-1.0,1.0,-1.6,.35,.8,.35,M.blue); box('Plant pot',7.0,.55,-1.0,.55,1,.55,M.wood); box('Plant canopy',7.0,1.7,-1.0,1.4,1.4,1.4,M.green);
-box('Ceiling',0,3.05,0,17.8,.08,11.8,M.white); box('Living window',6.8,1.8,-5.86,3.2,2.1,.08,M.white); box('Living curtain',8.0,1.8,-5.72,.18,2.3,3.1,M.wood); box('Guest window',-7.2,1.8,5.86,2.4,2.0,.08,M.white); box('Guest curtain',-8.2,1.8,5.72,.18,2.2,2.4,M.wood);
+box('Living window',6.8,1.8,-5.86,3.2,2.1,.08,M.white); box('Living curtain',8.0,1.8,-5.72,.18,2.3,3.1,M.wood); box('Guest window',-7.2,1.8,5.86,2.4,2.0,.08,M.white); box('Guest curtain',-8.2,1.8,5.72,.18,2.2,2.4,M.wood);
 box('Sofa cushion 1',.2,1.35,-.7,1.0,.35,.75,M.white); box('Sofa cushion 2',1.5,1.35,-.7,1.0,.35,.75,M.white); box('Sofa back',1.3,1.55,-1.42,4.1,1.0,.18,M.cream); box('Guest pillow',-6.1,1.1,3.0,.75,.22,.55,M.cream); box('Master pillow',5.6,1.1,3.0,.85,.22,.6,M.cream);
 box('Kitchen backsplash',5.8,2.0,-4.22,4.7,1.4,.06,M.blue); box('Kitchen overhead',5.8,2.55,-3.75,4.6,.55,.55,M.wood); box('Pendant 1',2.7,2.55,-3.1,.12,.8,.12,M.black); box('Pendant 2',4.0,2.55,-3.1,.12,.8,.12,M.black); box('Pendant shade 1',2.7,2.15,-3.1,.45,.18,.45,M.white); box('Pendant shade 2',4.0,2.15,-3.1,.45,.18,.45,M.white);
 // two bathroom suites and the master walk-in closet from the flooring plan
