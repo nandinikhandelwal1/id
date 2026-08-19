@@ -350,6 +350,13 @@ img,model-viewer,iframe{max-width:100%}
 .comparison-panel{display:flex;flex-direction:column;min-width:0;margin:0;overflow:hidden;background:#f6f2eb;border:1px solid rgba(32,35,34,.2);box-shadow:0 22px 55px rgba(32,35,34,.09)}
 .comparison-panel figcaption{display:flex;justify-content:space-between;gap:16px;min-height:54px;padding:16px;background:#eee7dc;border-bottom:1px solid rgba(32,35,34,.14);font:500 10px var(--mono);letter-spacing:.09em;text-transform:uppercase}
 .comparison-panel img{display:block;width:100%;height:clamp(420px,42vw,720px);padding:20px;background:#e8e1d7;object-fit:contain}
+.drawing-carousel,.render-carousel{position:relative;overflow:hidden}
+.drawing-carousel img,.render-carousel img{position:relative}
+.carousel-arrow{position:absolute;top:50%;z-index:2;width:42px;height:42px;border:1px solid rgba(255,255,255,.72);border-radius:50%;background:rgba(31,41,43,.78);color:#fff;font:28px/1 sans-serif;transform:translateY(-50%);cursor:pointer;transition:background .2s ease,transform .2s ease}
+.carousel-arrow:hover{background:#1f292b;transform:translateY(-50%) scale(1.05)}
+.carousel-arrow[hidden]{display:none}
+.drawing-prev,.carousel-prev{left:14px}
+.drawing-next,.carousel-next{right:14px}
 #drawing-room-image{padding:0;background:#e8e1d7;object-fit:contain;object-position:center}
 .render-panel img{padding:0;object-fit:cover}
 .room-study-panel{position:relative;background:linear-gradient(145deg,#ddd5ca,#f3eee7)}
