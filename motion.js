@@ -62,7 +62,7 @@ const drawingImages = {
 };
 
 const drawingRenders = {
-  'Flooring layout': [['assets/renders/flooring.png', 'FLOORING RENDER']],
+  'Flooring layout': [['assets/renders/flooring.png?v=2', 'FLOORING RENDER']],
   'Living area': [['assets/renders/living-area-1.png', 'LIVING AREA RENDER 1'], ['assets/renders/living-area-2.png', 'LIVING AREA RENDER 2']],
   'Kitchen elevation': [['assets/renders/kitchen.png', 'KITCHEN RENDER']],
   'Bedroom elevation': [['assets/renders/master-bedroom-1.png', 'MASTER BEDROOM RENDER 1'], ['assets/renders/master-bedroom-2.png', 'MASTER BEDROOM RENDER 2']],
