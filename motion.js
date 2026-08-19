@@ -61,10 +61,24 @@ const drawingImages = {
   'Guest bedroom plan': ['assets/drawings/web/guest-bedroom-plan-crop.png']
 };
 
+const drawingRenders = {
+  'Flooring layout': [['assets/renders/flooring.png', 'FLOORING RENDER']],
+  'Living area': [['assets/renders/living-area-1.png', 'LIVING AREA RENDER 1'], ['assets/renders/living-area-2.png', 'LIVING AREA RENDER 2']],
+  'Kitchen elevation': [['assets/renders/kitchen.png', 'KITCHEN RENDER']],
+  'Bedroom elevation': [['assets/renders/master-bedroom-1.png', 'MASTER BEDROOM RENDER 1'], ['assets/renders/master-bedroom-2.png', 'MASTER BEDROOM RENDER 2']],
+  'Guest bedroom plan': [['assets/renders/guest-bedroom-1.png', 'GUEST BEDROOM RENDER 1'], ['assets/renders/guest-bedroom-2.png', 'GUEST BEDROOM RENDER 2']]
+};
+
 let drawingIndex = 0;
 const drawingCarousel = document.querySelector('.drawing-carousel');
 const drawingPrev = document.querySelector('.drawing-prev');
 const drawingNext = document.querySelector('.drawing-next');
+const drawingRoomImage = document.querySelector('#drawing-room-image');
+const renderTitle = document.querySelector('#render-title');
+const renderCarousel = document.querySelector('.render-carousel');
+const renderPrev = document.querySelector('.carousel-prev');
+const renderNext = document.querySelector('.carousel-next');
+let renderIndex = 0;
 const showDrawing = (source) => { const items = Array.isArray(source) ? source : [source]; drawingIndex = Math.max(0, Math.min(drawingIndex, items.length - 1)); drawingImage.src = items[drawingIndex]; drawingPrev.hidden = items.length < 2; drawingNext.hidden = items.length < 2; };
 const changeDrawing = (step) => { const items = drawingImages[drawingTitle.textContent] || []; drawingIndex = (drawingIndex + step + items.length) % items.length; showDrawing(items); };
 drawingPrev?.addEventListener('click', () => changeDrawing(-1));
@@ -72,7 +86,31 @@ drawingNext?.addEventListener('click', () => changeDrawing(1));
 let drawingSwipeStart = null;
 drawingCarousel?.addEventListener('pointerdown', (event) => { drawingSwipeStart = event.clientX; });
 drawingCarousel?.addEventListener('pointerup', (event) => { if (drawingSwipeStart === null) return; const delta = event.clientX - drawingSwipeStart; drawingSwipeStart = null; if (Math.abs(delta) >= 35) changeDrawing(delta < 0 ? 1 : -1); });
+
+const showRender = (items = []) => {
+  const hasRenders = items.length > 0;
+  renderIndex = Math.max(0, Math.min(renderIndex, Math.max(0, items.length - 1)));
+  drawingRoomImage.hidden = !hasRenders;
+  renderPrev.hidden = !hasRenders || items.length < 2;
+  renderNext.hidden = !hasRenders || items.length < 2;
+  if (hasRenders) {
+    drawingRoomImage.src = items[renderIndex][0];
+    drawingRoomImage.alt = items[renderIndex][1];
+    renderTitle.textContent = items[renderIndex][1];
+  } else {
+    drawingRoomImage.removeAttribute('src');
+    drawingRoomImage.alt = 'No rendered reference available';
+    renderTitle.textContent = 'No rendered reference';
+  }
+};
+const changeRender = (step) => { const items = drawingRenders[drawingTitle.textContent] || []; if (!items.length) return; renderIndex = (renderIndex + step + items.length) % items.length; showRender(items); };
+renderPrev?.addEventListener('click', () => changeRender(-1));
+renderNext?.addEventListener('click', () => changeRender(1));
+let renderSwipeStart = null;
+renderCarousel?.addEventListener('pointerdown', (event) => { renderSwipeStart = event.clientX; });
+renderCarousel?.addEventListener('pointerup', (event) => { if (renderSwipeStart === null) return; const delta = event.clientX - renderSwipeStart; renderSwipeStart = null; if (Math.abs(delta) >= 35) changeRender(delta < 0 ? 1 : -1); });
 showDrawing(drawingImages[drawingTitle?.textContent || 'Flooring layout']);
+showRender(drawingRenders[drawingTitle?.textContent || 'Flooring layout']);
 
 document.querySelectorAll('.drawing-tabs button').forEach((button) => {
   button.addEventListener('click', () => {
@@ -81,7 +119,9 @@ document.querySelectorAll('.drawing-tabs button').forEach((button) => {
     button.setAttribute('aria-selected', 'true');
     document.querySelectorAll('.drawing-tabs button:not(.is-active)').forEach((item) => item.setAttribute('aria-selected', 'false'));
     drawingIndex = 0;
+    renderIndex = 0;
     showDrawing(drawingImages[title]);
+    showRender(drawingRenders[title]);
     drawingImage.alt = `Full ${title} AutoCAD drawing`;
     drawingTitle.textContent = title;
   });
