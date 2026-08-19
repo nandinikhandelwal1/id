@@ -423,3 +423,8 @@ img,model-viewer,iframe{max-width:100%}
   .book-controls{grid-template-columns:1fr 1fr;gap:8px}
   .book-page-dots{display:none}
 }
+
+/* Keep the background content compact on wide screens. */
+.background{padding:clamp(76px,8vw,110px) 10vw}
+.background-grid{gap:clamp(28px,4vw,52px);margin-top:clamp(38px,5vw,58px);max-width:1280px}
+@media(max-width:800px){.background{padding:72px 8vw}.background-grid{gap:36px;margin-top:40px}}
