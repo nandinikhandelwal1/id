@@ -65,10 +65,10 @@ const drawingImages = {
 };
 const drawingRenders = {
   'Flooring layout': ['assets/drawings/placeholders/apartment-study.svg', 'Complete apartment study'],
-  'Living elevation I': ['assets/renders/living-room-render-new.png', 'Living room render'],
-  'Living elevation II': ['assets/drawings/placeholders/living-ii.svg', 'Living II rendered placeholder'],
+  'Living elevation I': ['assets/renders/living-elevation-i.png', 'Living room render'],
+  'Living elevation II': ['assets/renders/living-elevation-ii.png', 'Living II render'],
   'Kitchen elevation': ['assets/drawings/placeholders/kitchen.svg', 'Kitchen rendered placeholder'],
-  'Bedroom elevation': ['assets/drawings/placeholders/bedroom.svg', 'Bedroom rendered placeholder'],
+  'Bedroom elevation': ['assets/renders/master-bedroom.png', 'Master bedroom render'],
   'Guest bedroom plan': ['assets/renders/guest-bedroom-render-new.png', 'Guest bedroom render']
 };
 
