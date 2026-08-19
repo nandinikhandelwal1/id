@@ -347,6 +347,7 @@ img,model-viewer,iframe{max-width:100%}
    comparison uses two equal columns with no nested PDF scrolling. */
 .moodboard-full-image{display:block;width:100%;height:auto;max-height:none;object-fit:contain;background:#eee8dd}
 .drawing-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+.drawing-comparison{grid-template-columns:minmax(0,1fr)}
 .comparison-panel{display:flex;flex-direction:column;min-width:0;margin:0;overflow:hidden;background:#f6f2eb;border:1px solid rgba(32,35,34,.2);box-shadow:0 22px 55px rgba(32,35,34,.09)}
 .comparison-panel figcaption{display:flex;justify-content:space-between;gap:16px;min-height:54px;padding:16px;background:#eee7dc;border-bottom:1px solid rgba(32,35,34,.14);font:500 10px var(--mono);letter-spacing:.09em;text-transform:uppercase}
 .comparison-panel img{display:block;width:100%;height:clamp(420px,42vw,720px);padding:20px;background:#e8e1d7;object-fit:contain}

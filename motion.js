@@ -19,8 +19,6 @@ if (window.matchMedia('(max-width: 800px)').matches) {
 
 const drawingImage = document.querySelector('#drawing-sheet-image');
 const drawingTitle = document.querySelector('#drawing-pdf-title');
-const drawingRoomImage = document.querySelector('#drawing-room-image');
-const renderTitle = document.querySelector('#render-title');
 const mainModel = document.querySelector('.main-model-shell model-viewer');
 
 // Restore a warmer, presentation-ready material response for the imported model.
@@ -56,50 +54,25 @@ mainModel?.addEventListener('load', () => {
 });
 
 const drawingImages = {
-  'Flooring layout': 'assets/drawings/web/flooring.png',
+  'Flooring layout': ['assets/drawings/web/flooring.png'],
   'Living area': ['assets/drawings/web/living-1.png', 'assets/drawings/web/living-2.png'],
-  'Kitchen elevation': 'assets/drawings/web/kitchen.png',
-  'Bedroom elevation': 'assets/drawings/web/bedroom.png',
-  'Guest bedroom plan': 'assets/drawings/web/guest-bedroom-plan-crop.png'
-};
-const drawingRenders = {
-  'Living area': [['assets/renders/living-elevation-i.png', 'Living render 1'], ['assets/renders/living-elevation-ii.png', 'Living render 2']],
-  'Bedroom elevation': [['assets/renders/master-bedroom.png', 'Master bedroom render']]
+  'Kitchen elevation': ['assets/drawings/web/kitchen.png'],
+  'Bedroom elevation': ['assets/drawings/web/bedroom.png'],
+  'Guest bedroom plan': ['assets/drawings/web/guest-bedroom-plan-crop.png']
 };
 
-let renderIndex = 0;
 let drawingIndex = 0;
 const drawingCarousel = document.querySelector('.drawing-carousel');
 const drawingPrev = document.querySelector('.drawing-prev');
 const drawingNext = document.querySelector('.drawing-next');
 const showDrawing = (source) => { const items = Array.isArray(source) ? source : [source]; drawingIndex = Math.max(0, Math.min(drawingIndex, items.length - 1)); drawingImage.src = items[drawingIndex]; drawingPrev.hidden = items.length < 2; drawingNext.hidden = items.length < 2; };
-const changeDrawing = (step) => { const items = drawingImages[drawingTitle.textContent]; if (!Array.isArray(items)) return; drawingIndex = (drawingIndex + step + items.length) % items.length; showDrawing(items); };
+const changeDrawing = (step) => { const items = drawingImages[drawingTitle.textContent] || []; drawingIndex = (drawingIndex + step + items.length) % items.length; showDrawing(items); };
 drawingPrev?.addEventListener('click', () => changeDrawing(-1));
 drawingNext?.addEventListener('click', () => changeDrawing(1));
 let drawingSwipeStart = null;
 drawingCarousel?.addEventListener('pointerdown', (event) => { drawingSwipeStart = event.clientX; });
 drawingCarousel?.addEventListener('pointerup', (event) => { if (drawingSwipeStart === null) return; const delta = event.clientX - drawingSwipeStart; drawingSwipeStart = null; if (Math.abs(delta) >= 35) changeDrawing(delta < 0 ? 1 : -1); });
-const renderCarousel = document.querySelector('.render-carousel');
-const renderPrev = document.querySelector('.carousel-prev');
-const renderNext = document.querySelector('.carousel-next');
-const showRender = (items) => {
-  const hasRenders = items?.length;
-  renderIndex = Math.max(0, Math.min(renderIndex, (items?.length || 1) - 1));
-  drawingRoomImage.hidden = !hasRenders;
-  renderPrev.hidden = !hasRenders || items.length < 2;
-  renderNext.hidden = !hasRenders || items.length < 2;
-  if (hasRenders) { drawingRoomImage.src = items[renderIndex][0]; drawingRoomImage.alt = items[renderIndex][1]; renderTitle.textContent = items[renderIndex][1]; }
-  else renderTitle.textContent = 'No rendered image';
-};
-renderPrev?.addEventListener('click', () => { const items = drawingRenders[drawingTitle.textContent] || []; renderIndex = (renderIndex - 1 + items.length) % items.length; showRender(items); });
-renderNext?.addEventListener('click', () => { const items = drawingRenders[drawingTitle.textContent] || []; renderIndex = (renderIndex + 1) % items.length; showRender(items); });
-let swipeStartX = null;
-renderCarousel?.addEventListener('pointerdown', (event) => { swipeStartX = event.clientX; });
-renderCarousel?.addEventListener('pointerup', (event) => { if (swipeStartX === null) return; const delta = event.clientX - swipeStartX; swipeStartX = null; if (Math.abs(delta) < 35) return; (delta < 0 ? renderNext : renderPrev)?.click(); });
-
-// Initialize the first tab on page load as well as after tab changes.
 showDrawing(drawingImages[drawingTitle?.textContent || 'Flooring layout']);
-showRender(drawingRenders[drawingTitle?.textContent || 'Flooring layout']);
 
 document.querySelectorAll('.drawing-tabs button').forEach((button) => {
   button.addEventListener('click', () => {
@@ -111,8 +84,6 @@ document.querySelectorAll('.drawing-tabs button').forEach((button) => {
     showDrawing(drawingImages[title]);
     drawingImage.alt = `Full ${title} AutoCAD drawing`;
     drawingTitle.textContent = title;
-    renderIndex = 0;
-    showRender(drawingRenders[title]);
   });
 });
 
